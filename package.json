@@ -1,0 +1,12 @@
+{
+  "name": "scrapr",
+  "version": "1.0.0",
+  "description": "Lightweight Node.js library for resolving multimedia links through third-party scraping services.",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "coflyn",
+  "dependencies": {
+    "axios": "^1.7.0",
+    "cheerio": "^1.0.0"
+  }
+}
