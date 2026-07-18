@@ -1,11 +1,19 @@
-const { scrape: scrapeBilibili } = require("./lib/bilibili/snapwc");
-const { scrape: scrapeDouyin } = require("./lib/douyin/direct");
-const { scrape: scrapeApplemusic } = require("./lib/applemusic/aplmate");
-const { scrape: scrapeSoundcloud } = require("./lib/soundcloud/klickaud");
+const bilibili = require("./lib/bilibili");
+const douyin = require("./lib/douyin");
+const applemusic = require("./lib/applemusic");
+const soundcloud = require("./lib/soundcloud");
+const tiktok = require("./lib/tiktok");
+const youtube = require("./lib/youtube");
+const instagram = require("./lib/instagram");
+const bandcamp = require("./lib/bandcamp");
 
 module.exports = {
-  scrapeBilibili,
-  scrapeDouyin,
-  scrapeApplemusic,
-  scrapeSoundcloud,
+  bilibili,
+  douyin,
+  applemusic,
+  soundcloud,
+  tiktok,
+  youtube,
+  instagram,
+  bandcamp
 };
