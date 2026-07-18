@@ -6,6 +6,8 @@ const tiktok = require("./lib/tiktok");
 const youtube = require("./lib/youtube");
 const instagram = require("./lib/instagram");
 const bandcamp = require("./lib/bandcamp");
+const spotify = require("./lib/spotify");
+const twitter = require("./lib/twitter");
 
 module.exports = {
   bilibili,
@@ -15,5 +17,7 @@ module.exports = {
   tiktok,
   youtube,
   instagram,
-  bandcamp
+  bandcamp,
+  spotify,
+  twitter
 };
