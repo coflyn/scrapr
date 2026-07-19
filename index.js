@@ -8,6 +8,9 @@ const instagram = require("./lib/instagram");
 const bandcamp = require("./lib/bandcamp");
 const spotify = require("./lib/spotify");
 const twitter = require("./lib/twitter");
+const pinterest = require("./lib/pinterest");
+const facebook = require("./lib/facebook");
+const threads = require("./lib/threads");
 
 module.exports = {
   bilibili,
@@ -19,5 +22,8 @@ module.exports = {
   instagram,
   bandcamp,
   spotify,
-  twitter
+  twitter,
+  pinterest,
+  facebook,
+  threads,
 };

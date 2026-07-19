@@ -1,8 +1,8 @@
 <div align="center">
 
-# 📄 scrapr
+# 📐 scrapr
 
-**Lightweight Node.js library for resolving multimedia links through third-party scraping services. Built for easy integration into backend services, bots, and other applications.**
+**A high-performance, lightweight Node.js multimedia downloader SDK that works without heavy headless browsers.**
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![node version](https://img.shields.io/badge/node-%3E%3D%2016.x-61afef.svg?style=flat-square)](https://nodejs.org)
@@ -10,16 +10,100 @@
 
 ---
 
-[Key Features](#-key-features) • [Installation](#-installation) • [Quick Start](#-quick-start) • [Response Schema](#-response-schema) • [API Reference](#-api-reference) • [Scraper Overview](#-scraper-overview) • [Issues & Requests](#-issues--requests)
+[Key Features](#-key-features) • [Prerequisites](#-prerequisites) • [Folder Structure](#-folder-structure) • [Installation](#-installation) • [Import Styles](#-import-styles) • [Quick Start](#-quick-start) • [Response Schema](#-response-schema) • [Configuration](#-configuration) • [Error Handling](#-error-handling) • [API Reference](#-api-reference) • [Performance](#-performance) • [Scraper Overview](#-scraper-overview) • [Contributing](#-contributing) • [Issues & Requests](#-issues--requests)
 
 </div>
 
 ## ✨ Key Features
 
-- **Hybrid Scraper Engine:** Engineered with a modular design supporting ultra-fast, lightweight HTTP parsers (using `axios`, `cheerio`, and sandbox JavaScript runtime injection) while remaining fully compatible with browser automation drivers like Playwright and Puppeteer for robust fallbacks.
-- **Unified JSON Schema:** All scrapers return a clean, normalized JSON format containing title, thumbnail, and media download links.
-- **Platform Redundancy:** Multiple scrapers per platform (e.g. TikTok, Spotify, Twitter) to guarantee fallbacks when target sites change.
-- **Fast Execution:** Responses resolve in milliseconds/seconds rather than waiting for browser execution trees.
+- **Modular Scraper Engine:** Modular architecture combining lightweight HTTP parsers (`axios`, `cheerio`, sandbox JS injection) with full browser automation (Playwright, Puppeteer) for seamless fallback chains.
+- **Unified JSON Schema:** Every scraper speaks the same language — normalized response shape with title, thumbnail, type flags, and media download array.
+- **Platform Redundancy:** Multiple scrapers per platform (TikTok, Spotify, Twitter, etc.) stacked as automatic fallbacks when upstream services shift or go dark.
+- **Sub-second Responses:** Direct API and page parsing instead of waiting for heavyweight browser render trees — most requests resolve in 2–6 seconds.
+
+---
+
+## 📋 Prerequisites
+
+- **Node.js** >= 16.x
+- **npm** or **yarn**
+
+### Runtime Dependencies
+
+| Dependency | Version | Purpose                      |
+| ---------- | ------- | ---------------------------- |
+| `axios`    | ^1.7.0  | HTTP client                  |
+| `cheerio`  | ^1.0.0  | HTML parsing & DOM traversal |
+
+### Optional — Headless Browser Fallback
+
+```bash
+npm install playwright
+# or
+npm install puppeteer
+```
+
+---
+
+## 📁 Folder Structure
+
+```
+scrapr/
+├── index.js                  # Entry point — exports all platform modules
+└── lib/
+    ├── applemusic/
+    │   └── aplmate/
+    │       └── index.js
+    ├── bandcamp/
+    │   └── bandcampdownloader/
+    │       └── index.js
+    ├── bilibili/
+    │   └── snapwc/
+    │       └── index.js
+    ├── douyin/
+    │   └── direct/
+    │       └── index.js
+    ├── facebook/
+    │   └── snapsave/
+    │       └── index.js
+    ├── instagram/
+    │   ├── indown/
+    │   │   └── index.js
+    │   └── downreels/
+    │       └── index.js
+    ├── pinterest/
+    │   └── pindown/
+    │       └── index.js
+    ├── soundcloud/
+    │   └── klickaud/
+    │       └── index.js
+    ├── spotify/
+    │   ├── spotmate/
+    │   │   └── index.js
+    │   └── spotidown/
+    │       └── index.js
+    ├── threads/
+    │   └── threadster/
+    │       └── index.js
+    ├── tiktok/
+    │   ├── snaptik/
+    │   │   └── index.js
+    │   └── tiktokio/
+    │       └── index.js
+    ├── twitter/
+    │   ├── tweeload/
+    │   │   └── index.js
+    │   └── tvd/
+    │       └── index.js
+    └── youtube/
+        └── ytmp3/
+            └── index.js
+```
+
+- Every scraper lives in `lib/<platform>/<method>/index.js`
+- Each `<method>/` exports a single `{ scrape }` function
+- `<platform>/index.js` re-exports all methods for that platform
+- `index.js` at root pulls everything together
 
 ---
 
@@ -39,31 +123,79 @@ npm install /path/to/scrapr
 
 ---
 
+## 📥 Import Styles
+
+### CommonJS (default)
+
+```js
+const scrapr = require("scrapr");
+// Or destructure individual platforms:
+const { tiktok, spotify, twitter } = require("scrapr");
+```
+
+### ESM / TypeScript
+
+```js
+import scrapr from "scrapr";
+import { tiktok, spotify } from "scrapr";
+```
+
+---
+
 ## 🚀 Quick Start
 
-Here is how simple it is to resolve a media URL with `scrapr`:
+### Single Media Download
 
 ```javascript
 const { tiktok, spotify } = require("scrapr");
 
 (async () => {
-  // 1. Scraping a TikTok video
+  // 1. TikTok video
   const tiktokRes = await tiktok.tiktokio(
     "https://www.tiktok.com/@_coflyn/video/7662892911448558865",
   );
   if (tiktokRes.status) {
-    console.log("TikTok Video Found:", tiktokRes.result.title);
+    console.log("Title:", tiktokRes.result.title);
     console.log("Downloads:", tiktokRes.result.downloads);
   }
 
-  // 2. Scraping a Spotify Track
+  // 2. Spotify track
   const spotifyRes = await spotify.spotmate(
     "https://open.spotify.com/track/5WOSNVChcadlsCRiqXE45K",
   );
   if (spotifyRes.status) {
-    console.log("Spotify Audio Link:", spotifyRes.result.downloads[0].url);
+    console.log("Audio URL:", spotifyRes.result.downloads[0].url);
   }
 })();
+```
+
+### Album / Playlist (Bandcamp)
+
+```javascript
+const { bandcamp } = require("scrapr");
+
+(async () => {
+  const res = await bandcamp.bandcampdownloader(
+    "https://bandcamp.com/album/example",
+    { quality: "320" }, // "128" | "320"
+  );
+  console.log(`${res.result.trackCount} tracks found`);
+})();
+```
+
+### Fallback Chain Pattern
+
+```javascript
+const { tiktok } = require("scrapr");
+
+async function resolveTikTok(url) {
+  const fallbacks = [tiktok.tiktokio, tiktok.snaptik];
+  for (const scraper of fallbacks) {
+    const res = await scraper(url);
+    if (res.status) return res.result;
+  }
+  throw new Error("All TikTok scrapers failed");
+}
 ```
 
 ---
@@ -80,12 +212,12 @@ All scrapers resolve into a standardized JSON payload structure:
   "result": {
     "title": "Media Title / Song Name",
     "thumbnail": "https://cdn.example.com/cover.jpg",
-    "type": "video", // "video" | "audio" | "image" | "album"
+    "type": "video",
     "downloads": [
       {
         "url": "https://cdn.provider.com/file.mp4?expires=123",
-        "type": "video", // "video" | "audio" | "image"
-        "quality": "720p" // Optional, e.g., "320kbps", "HD", "1080p"
+        "type": "video",
+        "quality": "720p"
       }
     ]
   }
@@ -103,6 +235,52 @@ All scrapers resolve into a standardized JSON payload structure:
 
 ---
 
+## ⚙️ Configuration
+
+### Global Timeout
+
+```js
+const axios = require("axios");
+axios.defaults.timeout = 30000; // 30s
+```
+
+### Proxy
+
+```js
+const axios = require("axios");
+const HttpsProxyAgent = require("https-proxy-agent");
+axios.defaults.httpsAgent = new HttpsProxyAgent("http://proxy:8080");
+```
+
+---
+
+## 🛠️ Error Handling
+
+### Common Error Patterns
+
+| Error                                 | Likely Cause                 | Fix                                |
+| ------------------------------------- | ---------------------------- | ---------------------------------- |
+| `Request failed with status code 4xx` | Upstream changed or blocked  | Try alternate scraper              |
+| `Could not extract CSRF token`        | Page structure changed       | [Report issue](#-issues--requests) |
+| `No download links found`             | Private content or dead link | Check URL accessibility            |
+| `socket hang up` / `ETIMEDOUT`        | Network issue / rate limit   | Retry with delay or proxy          |
+| `Cannot read properties of undefined` | Parser mismatch              | [Report issue](#-issues--requests) |
+
+### Fallback Chain Pattern
+
+```javascript
+async function resolveInstagram(url) {
+  const scrapers = [instagram.indown, instagram.downreels];
+  for (const s of scrapers) {
+    const res = await s(url);
+    if (res.status) return res.result;
+  }
+  return null;
+}
+```
+
+---
+
 ## 🔌 API Reference
 
 | Platform                                                                                       | Method                                      | Source Site                |
@@ -110,17 +288,44 @@ All scrapers resolve into a standardized JSON payload structure:
 | <img src="https://cdn.simpleicons.org/applemusic/FA576E" width="16" height="16" /> Apple Music | `applemusic.aplmate(url)`                   | aplmate.com                |
 | <img src="https://cdn.simpleicons.org/bilibili/00AEEC" width="16" height="16" /> Bilibili      | `bilibili.snapwc(url)`                      | snapwc.com                 |
 | <img src="https://cdn.simpleicons.org/tiktok/000000" width="16" height="16" /> Douyin          | `douyin.direct(url)`                        | direct page scrape         |
+| <img src="https://cdn.simpleicons.org/facebook/1877F2" width="16" height="16" /> Facebook      | `facebook.snapsave(url)`                    | snapsave.app               |
 | <img src="https://cdn.simpleicons.org/soundcloud/FF5500" width="16" height="16" /> SoundCloud  | `soundcloud.klickaud(url)`                  | klickaud.org               |
 | <img src="https://cdn.simpleicons.org/tiktok/000000" width="16" height="16" /> TikTok          | `tiktok.snaptik(url)`                       | snaptik.app                |
 |                                                                                                | `tiktok.tiktokio(url)`                      | tiktokio.com               |
 | <img src="https://cdn.simpleicons.org/youtube/FF0000" width="16" height="16" /> YouTube        | `youtube.ytmp3(url)`                        | ytmp3.mobi                 |
 | <img src="https://cdn.simpleicons.org/instagram/E4405F" width="16" height="16" /> Instagram    | `instagram.indown(url)`                     | indown.io                  |
 |                                                                                                | `instagram.downreels(url)`                  | downreels.com              |
+| <img src="https://cdn.simpleicons.org/pinterest/E60023" width="16" height="16" /> Pinterest    | `pinterest.pindown(url)`                    | pindown.io                 |
 | <img src="https://cdn.simpleicons.org/bandcamp/1DA1F2" width="16" height="16" /> Bandcamp      | `bandcamp.bandcampdownloader(url, options)` | bandcampdownloader.app     |
 | <img src="https://cdn.simpleicons.org/spotify/1ED760" width="16" height="16" /> Spotify        | `spotify.spotmate(url)`                     | spotmate.online            |
 |                                                                                                | `spotify.spotidown(url)`                    | spotidown.app              |
 | <img src="https://cdn.simpleicons.org/x/000000" width="16" height="16" /> Twitter / X          | `twitter.tweeload(url)`                     | tweeload.com               |
 |                                                                                                | `twitter.tvd(url)`                          | twittervideodownloader.com |
+| <img src="https://cdn.simpleicons.org/threads/000000" width="16" height="16" /> Threads        | `threads.threadster(url)`                   | threadster.app             |
+
+---
+
+## ⏱️ Performance
+
+| Platform    | Scraper              | Avg Time | Reliability | Notes                                     |
+| ----------- | -------------------- | -------- | ----------- | ----------------------------------------- |
+| Apple Music | `aplmate`            | ~3-5s    | ⚪ Medium   | Turnstile bypass, sometimes noise         |
+| Bilibili    | `snapwc`             | ~10-15s  | 🟢 High     | RSA + AES handshake, fails if snapwc down |
+| Douyin      | `direct`             | ~3-5s    | 🔴 Low      | Fragile — page structure changes often    |
+| Facebook    | `snapsave`           | ~4-8s    | 🟢 High     | Packed JS unpacker, dual stream           |
+| SoundCloud  | `klickaud`           | ~20-60s  | 🟡 Medium   | SSE worker, 128kbps only                  |
+| TikTok      | `tiktokio`           | ~2-3s    | 🟢 High     | JSON API, rich metadata                   |
+| TikTok      | `snaptik`            | ~4-8s    | 🟡 Medium   | Sandbox eval, IP-safe                     |
+| YouTube     | `ytmp3`              | ~6-10s   | 🟢 High     | Init + poll, reliable                     |
+| Instagram   | `indown`             | ~4-6s    | 🟢 High     | Axios + Cheerio, no browser               |
+| Instagram   | `downreels`          | ~2-4s    | 🟢 High     | Direct API, lightweight                   |
+| Pinterest   | `pindown`            | ~4-6s    | 🟢 High     | Token + API resolution                    |
+| Bandcamp    | `bandcampdownloader` | ~5-15s   | 🟢 High     | Multi-track, 320kbps                      |
+| Spotify     | `spotmate`           | ~3-5s    | 🟢 High     | CSRF + metadata                           |
+| Spotify     | `spotidown`          | ~4-6s    | 🟡 Medium   | Cookie rotation                           |
+| Twitter / X | `tweeload`           | ~3-5s    | 🟢 High     | Multi-quality                             |
+| Twitter / X | `tvd`                | ~3-5s    | 🟢 High     | Direct CDN links                          |
+| Threads     | `threadster`         | ~4-6s    | 🟢 High     | JWT token decode                          |
 
 ---
 
@@ -138,13 +343,17 @@ Most complex scraper. Uses RSA key exchange + AES encryption for API communicati
 
 Pure page scrape without third-party service. Extracts video data from `window._ROUTER_DATA` using custom brace-balancing JSON parser. Returns both no-watermark and watermark variants. Fast (~3-5s). Most fragile — Douyin frequently changes page structure.
 
+### Facebook (`snapsave`)
+
+Uses `snapsave.app` backend with custom packed JS unpacker logic to decode download payloads. Returns high-resolution FB video URLs with and without audio streams.
+
 ### SoundCloud (`klickaud`)
 
 Worker-based scraping via SSE stream. Requires priming POST then waiting for worker completion. Slowest (~20-60s). Returns 128kbps MP3 only. No thumbnail or metadata. Worker may randomly fail on certain tracks.
 
 ### TikTok (`snaptik`)
 
-Uses standard page fetching to retrieve a session token, then calls internal APIs. Dynamically evaluates obfuscated javascript response (`abc2.php`) via sandbox environment simulation to retrieve download URLs. Safe from IP-bans, but speed can vary depending on Snaptik's server stability.
+Uses a challenge-response API with AES-256-CBC decryption. Fetches an encrypted token from `/api/token`, decrypts it with a known salt + SHA256-derived key, then solves a dynamic math challenge (`b`, `r`, `c`, `m`, `n` types) to produce an `X-Verify` header. Returns rich metadata including author info, stats, and both normal + HD video URLs. Fast (~3-5s). Immune to IP bans — the challenge rotates per request.
 
 ### TikTok (`tiktokio`)
 
@@ -161,6 +370,10 @@ Murni Axios + Cheerio. Fetches a CSRF token and cookie from `indown.io`, then tr
 ### Instagram (`downreels`)
 
 Uses direct POST requests to downreels.com API (`zoraahub.com`). Fast response (~2-4s) returning direct links for videos, images, and audio along with thumbnails without the need for HTML parsing. Highly stable and lightweight.
+
+### Pinterest (`pindown`)
+
+Extracts session CSRF tokens and cookies from `pindown.io`, triggers backend action endpoints, and resolves intermediate API download tokens to return full high-res images and MP4 video downloads.
 
 ### Bandcamp (`bandcampdownloader`)
 
@@ -182,6 +395,26 @@ POSTs target tweet URL to `/en/download` on `tweeload.com` using custom desktop 
 
 POSTs to `twittervideodownloader.com` using session middleware CSRF tokens and GraphQL metadata. Extracts original, direct `video.twimg.com` CDN links without intermediate download proxies, giving you the fastest direct download speeds.
 
+### Threads (`threadster`)
+
+Resolves Instagram Threads media (images and videos) via `threadster.app` backend with JWT token payload decoding for direct download links.
+
+## 🤝 Contributing
+
+1. Fork the repo
+2. Create a feature branch: `git checkout -b feat/my-scraper`
+3. Add your scraper under `lib/<platform>/<method>/index.js`
+4. Export it in `lib/<platform>/index.js` and the root `index.js`
+5. Follow the existing response schema (`{ status, result: { title, thumbnail, type, downloads } }`)
+6. Open a pull request
+
+### Guidelines
+
+- Keep it lightweight — no puppeteer/playwright imports unless absolutely necessary
+- Every scraper must return the standardized JSON schema
+- Add a fallback scraper, don't replace existing ones
+- Document quirks and failure modes in Scraper Overview
+
 ---
 
 ## 💬 Issues & Requests
@@ -192,6 +425,6 @@ You can also open an issue if you would like to request support for a new platfo
 
 ---
 
-### 📄 License
+## 📄 License
 
-This project is licensed under the **MIT License**. See the `LICENSE` file for details.
+MIT - (c) 2026 coflyn
