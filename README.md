@@ -2,7 +2,7 @@
 
 # 📐 scrapr
 
-**A high-performance, lightweight Node.js multimedia downloader SDK that works without heavy headless browsers.**
+**Lightweight Node.js library for resolving multimedia links through third-party scraping services. Built for easy integration into backend services, bots, and other applications.**
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![node version](https://img.shields.io/badge/node-%3E%3D%2016.x-61afef.svg?style=flat-square)](https://nodejs.org)
@@ -16,9 +16,9 @@
 
 ## ✨ Key Features
 
-- **Modular Scraper Engine:** Modular architecture combining lightweight HTTP parsers (`axios`, `cheerio`, sandbox JS injection) with full browser automation (Playwright, Puppeteer) for seamless fallback chains.
+- **Modular Scraper Engine:** Lightweight HTTP parsers (`axios`, `cheerio`) for most platforms, with optional browser automation (Puppeteer, Playwright) for Cloudflare-bypassed scrapers.
 - **Unified JSON Schema:** Every scraper speaks the same language — normalized response shape with title, thumbnail, type flags, and media download array.
-- **Platform Redundancy:** Multiple scrapers per platform (TikTok, Spotify, Twitter, etc.) stacked as automatic fallbacks when upstream services shift or go dark.
+- **Platform Redundancy:** Multiple scrapers per platform (TikTok ×4, Instagram ×3, YouTube, etc.) stacked as fallbacks when upstream services shift or go dark.
 - **Sub-second Responses:** Direct API and page parsing instead of waiting for heavyweight browser render trees — most requests resolve in 2–6 seconds.
 
 ---
@@ -37,10 +37,15 @@
 
 ### Optional — Headless Browser Fallback
 
+Most scrapers use lightweight HTTP + DOM parsing only. Some scrapers require a browser for Cloudflare bypass:
+
 ```bash
-npm install playwright
-# or
-npm install puppeteer
+# For savetik (TikTok) & fdown (Facebook) — requires Google Chrome installed
+npm install puppeteer-core
+
+# For snapinsta (Instagram)
+npm install playwright-extra puppeteer-extra-plugin-stealth
+npm install playwright  # browser binaries
 ```
 
 ---
@@ -64,12 +69,16 @@ scrapr/
     │   └── direct/
     │       └── index.js
     ├── facebook/
-    │   └── snapsave/
+    │   ├── snapsave/
+    │   │   └── index.js
+    │   └── fdown/
     │       └── index.js
     ├── instagram/
     │   ├── indown/
     │   │   └── index.js
-    │   └── downreels/
+    │   ├── downreels/
+    │   │   └── index.js
+    │   └── snapinsta/
     │       └── index.js
     ├── pinterest/
     │   └── pindown/
@@ -88,7 +97,11 @@ scrapr/
     ├── tiktok/
     │   ├── snaptik/
     │   │   └── index.js
-    │   └── tiktokio/
+    │   ├── tiktokio/
+    │   │   └── index.js
+    │   ├── savetik/
+    │   │   └── index.js
+    │   └── ssstik/
     │       └── index.js
     ├── twitter/
     │   ├── tweeload/
@@ -289,12 +302,16 @@ async function resolveInstagram(url) {
 | <img src="https://cdn.simpleicons.org/bilibili/00AEEC" width="16" height="16" /> Bilibili      | `bilibili.snapwc(url)`                      | snapwc.com                 |
 | <img src="https://cdn.simpleicons.org/tiktok/000000" width="16" height="16" /> Douyin          | `douyin.direct(url)`                        | direct page scrape         |
 | <img src="https://cdn.simpleicons.org/facebook/1877F2" width="16" height="16" /> Facebook      | `facebook.snapsave(url)`                    | snapsave.app               |
+|                                                                                                | `facebook.fdown(url)`                       | fdown.net                  |
 | <img src="https://cdn.simpleicons.org/soundcloud/FF5500" width="16" height="16" /> SoundCloud  | `soundcloud.klickaud(url)`                  | klickaud.org               |
 | <img src="https://cdn.simpleicons.org/tiktok/000000" width="16" height="16" /> TikTok          | `tiktok.snaptik(url)`                       | snaptik.app                |
 |                                                                                                | `tiktok.tiktokio(url)`                      | tiktokio.com               |
+|                                                                                                | `tiktok.savetik(url)`                       | savetik.co                 |
+|                                                                                                | `tiktok.ssstik(url)`                        | ssstik.io                  |
 | <img src="https://cdn.simpleicons.org/youtube/FF0000" width="16" height="16" /> YouTube        | `youtube.ytmp3(url)`                        | ytmp3.mobi                 |
 | <img src="https://cdn.simpleicons.org/instagram/E4405F" width="16" height="16" /> Instagram    | `instagram.indown(url)`                     | indown.io                  |
 |                                                                                                | `instagram.downreels(url)`                  | downreels.com              |
+|                                                                                                | `instagram.snapinsta(url)`                  | snapinsta.to               |
 | <img src="https://cdn.simpleicons.org/pinterest/E60023" width="16" height="16" /> Pinterest    | `pinterest.pindown(url)`                    | pindown.io                 |
 | <img src="https://cdn.simpleicons.org/bandcamp/1DA1F2" width="16" height="16" /> Bandcamp      | `bandcamp.bandcampdownloader(url, options)` | bandcampdownloader.app     |
 | <img src="https://cdn.simpleicons.org/spotify/1ED760" width="16" height="16" /> Spotify        | `spotify.spotmate(url)`                     | spotmate.online            |
@@ -313,12 +330,16 @@ async function resolveInstagram(url) {
 | Bilibili    | `snapwc`             | ~10-15s  | 🟢 High     | RSA + AES handshake, fails if snapwc down |
 | Douyin      | `direct`             | ~3-5s    | 🔴 Low      | Fragile — page structure changes often    |
 | Facebook    | `snapsave`           | ~4-8s    | 🟢 High     | Packed JS unpacker, dual stream           |
+| Facebook    | `fdown`              | ~8-15s   | 🟡 Medium   | Puppeteer + Chrome, Cloudflare bypass     |
 | SoundCloud  | `klickaud`           | ~20-60s  | 🟡 Medium   | SSE worker, 128kbps only                  |
 | TikTok      | `tiktokio`           | ~2-3s    | 🟢 High     | JSON API, rich metadata                   |
-| TikTok      | `snaptik`            | ~4-8s    | 🟡 Medium   | Sandbox eval, IP-safe                     |
+| TikTok      | `snaptik`            | ~3-5s    | 🟢 High     | Challenge-response AES, IP-safe           |
+| TikTok      | `ssstik`             | ~2-4s    | 🟢 High     | Axios + Cheerio, HTMX polling             |
+| TikTok      | `savetik`            | ~8-15s   | 🟡 Medium   | Puppeteer + Chrome, Cloudflare bypass     |
 | YouTube     | `ytmp3`              | ~6-10s   | 🟢 High     | Init + poll, reliable                     |
 | Instagram   | `indown`             | ~4-6s    | 🟢 High     | Axios + Cheerio, no browser               |
 | Instagram   | `downreels`          | ~2-4s    | 🟢 High     | Direct API, lightweight                   |
+| Instagram   | `snapinsta`          | ~10-20s  | 🟡 Medium   | Playwright + stealth, Turnstile bypass    |
 | Pinterest   | `pindown`            | ~4-6s    | 🟢 High     | Token + API resolution                    |
 | Bandcamp    | `bandcampdownloader` | ~5-15s   | 🟢 High     | Multi-track, 320kbps                      |
 | Spotify     | `spotmate`           | ~3-5s    | 🟢 High     | CSRF + metadata                           |
@@ -347,9 +368,9 @@ Pure page scrape without third-party service. Extracts video data from `window._
 
 Uses `snapsave.app` backend with custom packed JS unpacker logic to decode download payloads. Returns high-resolution FB video URLs with and without audio streams.
 
-### SoundCloud (`klickaud`)
+### Facebook (`fdown`)
 
-Worker-based scraping via SSE stream. Requires priming POST then waiting for worker completion. Slowest (~20-60s). Returns 128kbps MP3 only. No thumbnail or metadata. Worker may randomly fail on certain tracks.
+Uses Puppeteer + Chrome browser automation via `fdown.net` to bypass Cloudflare protection. Requires Google Chrome installed and `puppeteer-core` dependency. Returns SD and HD video download links. Runs in non-headless mode for reliability.
 
 ### TikTok (`snaptik`)
 
@@ -358,6 +379,18 @@ Uses a challenge-response API with AES-256-CBC decryption. Fetches an encrypted 
 ### TikTok (`tiktokio`)
 
 Uses direct POST requests to a JSON API endpoint. Extremely fast (~2-3s) and returns very detailed metadata (likes, comments, play count, slideshow images list, HD video, and audio). Handles photos/slideshows very well. Very clean output.
+
+### TikTok (`ssstik`)
+
+Axios + Cheerio scraper with HTMX-based token extraction. Fetches a session token from the homepage, then submits a POST via HTMX to resolve download links. Supports both video and photo/slideshow content. Returns watermarked and non-watermarked variants. Fast (~2-4s). No browser required.
+
+### TikTok (`savetik`)
+
+Puppeteer + Chrome automation via `savetik.co`. Requires Google Chrome installed and `puppeteer-core` dependency. Returns video and audio download links. Runs in non-headless mode for Cloudflare bypass.
+
+### SoundCloud (`klickaud`)
+
+Worker-based scraping via SSE stream. Requires priming POST then waiting for worker completion. Slowest (~20-60s). Returns 128kbps MP3 only. No thumbnail or metadata. Worker may randomly fail on certain tracks.
 
 ### YouTube (`ytmp3`)
 
@@ -370,6 +403,10 @@ Murni Axios + Cheerio. Fetches a CSRF token and cookie from `indown.io`, then tr
 ### Instagram (`downreels`)
 
 Uses direct POST requests to downreels.com API (`zoraahub.com`). Fast response (~2-4s) returning direct links for videos, images, and audio along with thumbnails without the need for HTML parsing. Highly stable and lightweight.
+
+### Instagram (`snapinsta`)
+
+Playwright + stealth plugin automation via `snapinsta.to`. Uses headless Chromium to bypass Cloudflare Turnstile, fills form input, and waits for download links. Requires `playwright-extra` and `puppeteer-extra-plugin-stealth`. Slower (~10-20s) due to browser overhead.
 
 ### Pinterest (`pindown`)
 
