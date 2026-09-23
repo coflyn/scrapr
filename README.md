@@ -1,12 +1,23 @@
 <div align="center">
 
+<img src=".github/assets/banner.png" alt="scrapr banner" width="100%" />
+
+<br/>
+<br/>
+
 # 📐 scrapr
 
-**Lightweight Node.js library for resolving multimedia links through third-party scraping services. Built for easy integration into backend services, bots, and other applications.**
+**Lightweight Node.js library for resolving multimedia links via direct platform APIs and scraper services. Built for bots and backend applications.**
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![node version](https://img.shields.io/badge/node-%3E%3D%2016.x-61afef.svg?style=flat-square)](https://nodejs.org)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
+<br/>
+
+<a href="https://sociabuzz.com/coflyn/tribe" target="_blank">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="60" />
+</a>
 
 ---
 
@@ -243,7 +254,7 @@ async function resolveInstagram(url) {
 | Platform                                                                                       | Method                                      | Source Site                |
 | :--------------------------------------------------------------------------------------------- | :------------------------------------------ | :------------------------- |
 | <img src="https://cdn.simpleicons.org/applemusic/FA576E" width="16" height="16" /> Apple Music | `applemusic.aplmate(url)`                   | aplmate.com                |
-| <img src="https://cdn.simpleicons.org/bilibili/00AEEC" width="16" height="16" /> Bilibili      | `bilibili.direct(url)`                      | api.bilibili.com           |
+| <img src="https://cdn.simpleicons.org/bilibili/00AEEC" width="16" height="16" /> Bilibili      | `bilibili.direct(url)`                      | api.bilibili.com / bilibili.tv |
 |                                                                                                | `bilibili.snapwc(url)`                      | snapwc.com                 |
 | <img src="https://cdn.simpleicons.org/tiktok/000000" width="16" height="16" /> Douyin          | `douyin.direct(url)`                        | direct page scrape         |
 | <img src="https://cdn.simpleicons.org/facebook/1877F2" width="16" height="16" /> Facebook      | `facebook.snapsave(url)`                    | snapsave.app               |
@@ -253,10 +264,14 @@ async function resolveInstagram(url) {
 |                                                                                                | `tiktok.tiktokio(url)`                      | tiktokio.com               |
 |                                                                                                | `tiktok.savetik(url)`                       | savetik.co                 |
 |                                                                                                | `tiktok.ssstik(url)`                        | ssstik.io                  |
+|                                                                                                | `tiktok.tikdownloader(url)`                 | tikdownloader.io           |
 | <img src="https://cdn.simpleicons.org/youtube/FF0000" width="16" height="16" /> YouTube        | `youtube.ytmp3(url)`                        | ytmp3.mobi                 |
+|                                                                                                | `youtube.ytmp3gg(url)`                      | media.ytmp3.gg             |
+|                                                                                                | `youtube.playlist(url)`                     | youtube.com/playlist       |
 | <img src="https://cdn.simpleicons.org/instagram/E4405F" width="16" height="16" /> Instagram    | `instagram.direct(url)`                     | direct embed scrape        |
 |                                                                                                | `instagram.indown(url)`                     | indown.io                  |
 |                                                                                                | `instagram.downreels(url)`                  | downreels.com              |
+|                                                                                                | `instagram.snapsave(url)`                   | snapsave.app               |
 |                                                                                                | `instagram.snapinsta(url)`                  | snapinsta.to               |
 | <img src="https://cdn.simpleicons.org/pinterest/E60023" width="16" height="16" /> Pinterest    | `pinterest.direct(url)`                     | direct page scrape         |
 |                                                                                                | `pinterest.pindown(url)`                    | pindown.io                 |
@@ -265,9 +280,11 @@ async function resolveInstagram(url) {
 | <img src="https://cdn.simpleicons.org/xiaohongshu/FF2442" width="16" height="16" /> RedNote    | `rednote.direct(url)`                       | xiaohongshu.com / rednote  |
 | <img src="https://cdn.simpleicons.org/spotify/1ED760" width="16" height="16" /> Spotify        | `spotify.spotmate(url)`                     | spotmate.online            |
 |                                                                                                | `spotify.spotidown(url)`                    | spotidown.app              |
+|                                                                                                | `spotify.soundloaders(url)`                 | soundloaders.app           |
 | <img src="https://cdn.simpleicons.org/x/000000" width="16" height="16" /> Twitter / X          | `twitter.direct(url)`                       | api.fxtwitter.com          |
 |                                                                                                | `twitter.tweeload(url)`                     | tweeload.com               |
 |                                                                                                | `twitter.tvd(url)`                          | twittervideodownloader.com |
+|                                                                                                | `twitter.savetwt(url)`                      | savetwt.com                |
 | <img src="https://cdn.simpleicons.org/threads/000000" width="16" height="16" /> Threads        | `threads.threadster(url)`                   | threadster.app             |
 
 ---

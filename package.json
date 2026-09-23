@@ -1,7 +1,7 @@
 {
   "name": "scrapr",
   "version": "1.0.0",
-  "description": "Lightweight Node.js library for resolving multimedia links through third-party scraping services.",
+  "description": "Lightweight Node.js library for resolving multimedia links via direct platform APIs and scraper services. Built for bots and backend applications.",
   "main": "index.js",
   "scripts": {
     "test": "node test/test.js"
