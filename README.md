@@ -1,8 +1,5 @@
 <div align="center">
 
-<br/>
-<br/>
-
 # 📐 scrapr
 
 **Lightweight Node.js library for resolving multimedia links via direct platform APIs and scraper services. Built for bots and backend applications.**
@@ -14,6 +11,8 @@
 <br/>
 
 <img src=".github/assets/banner.png" alt="scrapr banner" width="100%" />
+
+<br/>
 
 <a href="https://sociabuzz.com/coflyn/tribe" target="_blank">
   <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="60" />
