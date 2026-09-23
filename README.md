@@ -10,16 +10,16 @@
 
 ---
 
-[Key Features](#-key-features) • [Prerequisites](#-prerequisites) • [Folder Structure](#-folder-structure) • [Installation](#-installation) • [Import Styles](#-import-styles) • [Quick Start](#-quick-start) • [Response Schema](#-response-schema) • [Configuration](#-configuration) • [Error Handling](#-error-handling) • [API Reference](#-api-reference) • [Performance](#-performance) • [Scraper Overview](#-scraper-overview) • [Contributing](#-contributing) • [Issues & Requests](#-issues--requests)
+[Key Features](#-key-features) • [Prerequisites](#-prerequisites) • [Folder Structure](#-folder-structure) • [Installation](#-installation) • [Import Styles](#-import-styles) • [Quick Start](#-quick-start) • [Response Schema](#-response-schema) • [Configuration](#-configuration) • [Error Handling](#-error-handling) • [API Reference](#-api-reference) • [Performance](#-performance) • [Contributing](#-contributing) • [Security](#-security) • [Issues & Requests](#-issues--requests)
 
 </div>
 
 ## ✨ Key Features
 
 - **Modular Scraper Engine:** Lightweight HTTP parsers (`axios`, `cheerio`) for most platforms, with optional browser automation (Puppeteer, Playwright) for Cloudflare-bypassed scrapers.
-- **Unified JSON Schema:** Every scraper speaks the same language — normalized response shape with title, thumbnail, type flags, and media download array.
-- **Platform Redundancy:** Multiple scrapers per platform (TikTok ×4, Instagram ×3, YouTube, etc.) stacked as fallbacks when upstream services shift or go dark.
-- **Sub-second Responses:** Direct API and page parsing instead of waiting for heavyweight browser render trees — most requests resolve in 2–6 seconds.
+- **Unified JSON Schema:** Every scraper speaks the same language: normalized response shape with title, thumbnail, type flags, and media download array.
+- **Platform Redundancy:** Multiple scrapers per platform (TikTok x4, Instagram x3, YouTube, etc.) stacked as fallbacks when upstream services shift or go dark.
+- **Fast Lightweight Responses:** Direct API and page parsing instead of waiting for heavyweight browser render trees. Most requests resolve in 2 to 6 seconds.
 
 ---
 
@@ -35,12 +35,12 @@
 | `axios`    | ^1.7.0  | HTTP client                  |
 | `cheerio`  | ^1.0.0  | HTML parsing & DOM traversal |
 
-### Optional — Headless Browser Fallback
+### Optional: Headless Browser Fallback
 
 Most scrapers use lightweight HTTP + DOM parsing only. Some scrapers require a browser for Cloudflare bypass:
 
 ```bash
-# For savetik (TikTok) & fdown (Facebook) — requires Google Chrome installed
+# For savetik (TikTok) & fdown (Facebook) (requires Google Chrome installed)
 npm install puppeteer-core
 
 # For snapinsta (Instagram)
@@ -52,71 +52,15 @@ npm install playwright  # browser binaries
 
 ## 📁 Folder Structure
 
-```
+```text
 scrapr/
-├── index.js                  # Entry point — exports all platform modules
+├── index.js                  # Entry point: exports all platform modules
 └── lib/
-    ├── applemusic/
-    │   └── aplmate/
-    │       └── index.js
-    ├── bandcamp/
-    │   └── bandcampdownloader/
-    │       └── index.js
-    ├── bilibili/
-    │   └── snapwc/
-    │       └── index.js
-    ├── douyin/
-    │   └── direct/
-    │       └── index.js
-    ├── facebook/
-    │   ├── snapsave/
-    │   │   └── index.js
-    │   └── fdown/
-    │       └── index.js
-    ├── instagram/
-    │   ├── indown/
-    │   │   └── index.js
-    │   ├── downreels/
-    │   │   └── index.js
-    │   └── snapinsta/
-    │       └── index.js
-    ├── pinterest/
-    │   └── pindown/
-    │       └── index.js
-    ├── soundcloud/
-    │   └── klickaud/
-    │       └── index.js
-    ├── spotify/
-    │   ├── spotmate/
-    │   │   └── index.js
-    │   └── spotidown/
-    │       └── index.js
-    ├── threads/
-    │   └── threadster/
-    │       └── index.js
-    ├── tiktok/
-    │   ├── snaptik/
-    │   │   └── index.js
-    │   ├── tiktokio/
-    │   │   └── index.js
-    │   ├── savetik/
-    │   │   └── index.js
-    │   └── ssstik/
-    │       └── index.js
-    ├── twitter/
-    │   ├── tweeload/
-    │   │   └── index.js
-    │   └── tvd/
-    │       └── index.js
-    └── youtube/
-        └── ytmp3/
-            └── index.js
+    └── <platform>/           # Platform namespace (e.g. tiktok, instagram)
+        ├── index.js          # Platform export aggregator
+        └── <method>/         # Scraper implementation
+            └── index.js      # Exports { scrape }
 ```
-
-- Every scraper lives in `lib/<platform>/<method>/index.js`
-- Each `<method>/` exports a single `{ scrape }` function
-- `<platform>/index.js` re-exports all methods for that platform
-- `index.js` at root pulls everything together
 
 ---
 
@@ -328,7 +272,7 @@ async function resolveInstagram(url) {
 | ----------- | -------------------- | -------- | ----------- | ----------------------------------------- |
 | Apple Music | `aplmate`            | ~3-5s    | ⚪ Medium   | Turnstile bypass, sometimes noise         |
 | Bilibili    | `snapwc`             | ~10-15s  | 🟢 High     | RSA + AES handshake, fails if snapwc down |
-| Douyin      | `direct`             | ~3-5s    | 🔴 Low      | Fragile — page structure changes often    |
+| Douyin      | `direct`             | ~3-5s    | 🔴 Low      | Fragile: page structure changes often     |
 | Facebook    | `snapsave`           | ~4-8s    | 🟢 High     | Packed JS unpacker, dual stream           |
 | Facebook    | `fdown`              | ~8-15s   | 🟡 Medium   | Puppeteer + Chrome, Cloudflare bypass     |
 | SoundCloud  | `klickaud`           | ~20-60s  | 🟡 Medium   | SSE worker, 128kbps only                  |
@@ -350,107 +294,17 @@ async function resolveInstagram(url) {
 
 ---
 
-## 🔍 Scraper Overview
-
-### Apple Music (`aplmate`)
-
-Fast response (~3-5s). Relies on form submission with Turnstile bypass. Returns MP3 download URLs. Sometimes produces duplicate links or noise ("Download Another Song").
-
-### Bilibili (`snapwc`)
-
-Most complex scraper. Uses RSA key exchange + AES encryption for API communication. Requires multi-step session init and event logging. Returns muxed MP4 video with subtitles. Slower (~10-15s). Fails entirely if snapwc is down.
-
-### Douyin (`direct`)
-
-Pure page scrape without third-party service. Extracts video data from `window._ROUTER_DATA` using custom brace-balancing JSON parser. Returns both no-watermark and watermark variants. Fast (~3-5s). Most fragile — Douyin frequently changes page structure.
-
-### Facebook (`snapsave`)
-
-Uses `snapsave.app` backend with custom packed JS unpacker logic to decode download payloads. Returns high-resolution FB video URLs with and without audio streams.
-
-### Facebook (`fdown`)
-
-Uses Puppeteer + Chrome browser automation via `fdown.net` to bypass Cloudflare protection. Requires Google Chrome installed and `puppeteer-core` dependency. Returns SD and HD video download links. Runs in non-headless mode for reliability.
-
-### TikTok (`snaptik`)
-
-Uses a challenge-response API with AES-256-CBC decryption. Fetches an encrypted token from `/api/token`, decrypts it with a known salt + SHA256-derived key, then solves a dynamic math challenge (`b`, `r`, `c`, `m`, `n` types) to produce an `X-Verify` header. Returns rich metadata including author info, stats, and both normal + HD video URLs. Fast (~3-5s). Immune to IP bans — the challenge rotates per request.
-
-### TikTok (`tiktokio`)
-
-Uses direct POST requests to a JSON API endpoint. Extremely fast (~2-3s) and returns very detailed metadata (likes, comments, play count, slideshow images list, HD video, and audio). Handles photos/slideshows very well. Very clean output.
-
-### TikTok (`ssstik`)
-
-Axios + Cheerio scraper with HTMX-based token extraction. Fetches a session token from the homepage, then submits a POST via HTMX to resolve download links. Supports both video and photo/slideshow content. Returns watermarked and non-watermarked variants. Fast (~2-4s). No browser required.
-
-### TikTok (`savetik`)
-
-Puppeteer + Chrome automation via `savetik.co`. Requires Google Chrome installed and `puppeteer-core` dependency. Returns video and audio download links. Runs in non-headless mode for Cloudflare bypass.
-
-### SoundCloud (`klickaud`)
-
-Worker-based scraping via SSE stream. Requires priming POST then waiting for worker completion. Slowest (~20-60s). Returns 128kbps MP3 only. No thumbnail or metadata. Worker may randomly fail on certain tracks.
-
-### YouTube (`ytmp3`)
-
-Connects to ytmp3.mobi API. Requires an init handshake followed by polling a convert URL to monitor progress until the download link is ready. Reliable for both video (MP4) and audio (MP3). Polling adds slight latency (~6-10s total).
-
-### Instagram (`indown`)
-
-Murni Axios + Cheerio. Fetches a CSRF token and cookie from `indown.io`, then triggers a POST request to resolve the media URL. Resolves Instagram reels, videos, and images with good response speed (~4-6s). Does not require any headless browser runtime.
-
-### Instagram (`downreels`)
-
-Uses direct POST requests to downreels.com API (`zoraahub.com`). Fast response (~2-4s) returning direct links for videos, images, and audio along with thumbnails without the need for HTML parsing. Highly stable and lightweight.
-
-### Instagram (`snapinsta`)
-
-Playwright + stealth plugin automation via `snapinsta.to`. Uses headless Chromium to bypass Cloudflare Turnstile, fills form input, and waits for download links. Requires `playwright-extra` and `puppeteer-extra-plugin-stealth`. Slower (~10-20s) due to browser overhead.
-
-### Pinterest (`pindown`)
-
-Extracts session CSRF tokens and cookies from `pindown.io`, triggers backend action endpoints, and resolves intermediate API download tokens to return full high-res images and MP4 video downloads.
-
-### Bandcamp (`bandcampdownloader`)
-
-Uses `bandcampdownloader.app` backend. Resolves session cookies, extracts hidden CSRF tokens, parses a dynamically rendered base64 metadata array, and fires individual track requests. Supports single tracks as well as full albums/playlists with metadata (index, track title, artist, cover art, release year). Returns high-quality 320kbps MP3 download links.
-
-### Spotify (`spotmate`)
-
-Fetches a session cookie and CSRF token from `spotmate.online`, requests track metadata from `/getTrackData`, and triggers a track conversion via `/convert`. Fast response (~3-5s), returns standard MP3 downloads.
-
-### Spotify (`spotidown`)
-
-Uses `spotidown.app` backend. Triggers form actions with cookie rotation and returns single track downloads, album lists, or direct MP3 download buttons. Includes option for fetching high-resolution album cover arts.
-
-### Twitter / X (`tweeload`)
-
-POSTs target tweet URL to `/en/download` on `tweeload.com` using custom desktop user-agents. Highly reliable, returning multiple video download qualities (HD, SD, low-res) mapped via intermediate CDN download proxies.
-
-### Twitter / X (`tvd`)
-
-POSTs to `twittervideodownloader.com` using session middleware CSRF tokens and GraphQL metadata. Extracts original, direct `video.twimg.com` CDN links without intermediate download proxies, giving you the fastest direct download speeds.
-
-### Threads (`threadster`)
-
-Resolves Instagram Threads media (images and videos) via `threadster.app` backend with JWT token payload decoding for direct download links.
-
 ## 🤝 Contributing
 
-1. Fork the repo
-2. Create a feature branch: `git checkout -b feat/my-scraper`
-3. Add your scraper under `lib/<platform>/<method>/index.js`
-4. Export it in `lib/<platform>/index.js` and the root `index.js`
-5. Follow the existing response schema (`{ status, result: { title, thumbnail, type, downloads } }`)
-6. Open a pull request
+Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for architecture details, response schemas, and verification instructions.
 
-### Guidelines
+All contributors must adhere to [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
-- Keep it lightweight — no puppeteer/playwright imports unless absolutely necessary
-- Every scraper must return the standardized JSON schema
-- Add a fallback scraper, don't replace existing ones
-- Document quirks and failure modes in Scraper Overview
+---
+
+## 🔒 Security
+
+For security vulnerabilities and responsible disclosure, please refer to [SECURITY.md](SECURITY.md).
 
 ---
 

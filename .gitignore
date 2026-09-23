@@ -7,3 +7,6 @@ yarn-error.log*
 .env
 .env.local
 .env.production
+.agents
+AGENTS.md   
+src-scrapers
