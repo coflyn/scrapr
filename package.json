@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Lightweight Node.js library for resolving multimedia links through third-party scraping services.",
   "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
   "license": "MIT",
   "author": "coflyn",
   "dependencies": {
