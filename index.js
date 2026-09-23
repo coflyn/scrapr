@@ -11,6 +11,8 @@ const twitter = require("./lib/twitter");
 const pinterest = require("./lib/pinterest");
 const facebook = require("./lib/facebook");
 const threads = require("./lib/threads");
+const pixiv = require("./lib/pixiv");
+const rednote = require("./lib/rednote");
 
 module.exports = {
   bilibili,
@@ -26,4 +28,6 @@ module.exports = {
   pinterest,
   facebook,
   threads,
+  pixiv,
+  rednote,
 };
