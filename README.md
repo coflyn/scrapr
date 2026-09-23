@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src=".github/assets/banner.png" alt="scrapr banner" width="100%" />
-
 <br/>
 <br/>
 
@@ -14,6 +12,8 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 <br/>
+
+<img src=".github/assets/banner.png" alt="scrapr banner" width="100%" />
 
 <a href="https://sociabuzz.com/coflyn/tribe" target="_blank">
   <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="60" />
@@ -251,75 +251,75 @@ async function resolveInstagram(url) {
 
 ## 🔌 API Reference
 
-| Platform                                                                                       | Method                                      | Source Site                |
-| :--------------------------------------------------------------------------------------------- | :------------------------------------------ | :------------------------- |
-| <img src="https://cdn.simpleicons.org/applemusic/FA576E" width="16" height="16" /> Apple Music | `applemusic.aplmate(url)`                   | aplmate.com                |
+| Platform                                                                                       | Method                                      | Source Site                    |
+| :--------------------------------------------------------------------------------------------- | :------------------------------------------ | :----------------------------- |
+| <img src="https://cdn.simpleicons.org/applemusic/FA576E" width="16" height="16" /> Apple Music | `applemusic.aplmate(url)`                   | aplmate.com                    |
 | <img src="https://cdn.simpleicons.org/bilibili/00AEEC" width="16" height="16" /> Bilibili      | `bilibili.direct(url)`                      | api.bilibili.com / bilibili.tv |
-|                                                                                                | `bilibili.snapwc(url)`                      | snapwc.com                 |
-| <img src="https://cdn.simpleicons.org/tiktok/000000" width="16" height="16" /> Douyin          | `douyin.direct(url)`                        | direct page scrape         |
-| <img src="https://cdn.simpleicons.org/facebook/1877F2" width="16" height="16" /> Facebook      | `facebook.snapsave(url)`                    | snapsave.app               |
-|                                                                                                | `facebook.fdown(url)`                       | fdown.net                  |
-| <img src="https://cdn.simpleicons.org/soundcloud/FF5500" width="16" height="16" /> SoundCloud  | `soundcloud.klickaud(url)`                  | klickaud.org               |
-| <img src="https://cdn.simpleicons.org/tiktok/000000" width="16" height="16" /> TikTok          | `tiktok.snaptik(url)`                       | snaptik.app                |
-|                                                                                                | `tiktok.tiktokio(url)`                      | tiktokio.com               |
-|                                                                                                | `tiktok.savetik(url)`                       | savetik.co                 |
-|                                                                                                | `tiktok.ssstik(url)`                        | ssstik.io                  |
-|                                                                                                | `tiktok.tikdownloader(url)`                 | tikdownloader.io           |
-| <img src="https://cdn.simpleicons.org/youtube/FF0000" width="16" height="16" /> YouTube        | `youtube.ytmp3(url)`                        | ytmp3.mobi                 |
-|                                                                                                | `youtube.ytmp3gg(url)`                      | media.ytmp3.gg             |
-|                                                                                                | `youtube.playlist(url)`                     | youtube.com/playlist       |
-| <img src="https://cdn.simpleicons.org/instagram/E4405F" width="16" height="16" /> Instagram    | `instagram.direct(url)`                     | direct embed scrape        |
-|                                                                                                | `instagram.indown(url)`                     | indown.io                  |
-|                                                                                                | `instagram.downreels(url)`                  | downreels.com              |
-|                                                                                                | `instagram.snapsave(url)`                   | snapsave.app               |
-|                                                                                                | `instagram.snapinsta(url)`                  | snapinsta.to               |
-| <img src="https://cdn.simpleicons.org/pinterest/E60023" width="16" height="16" /> Pinterest    | `pinterest.direct(url)`                     | direct page scrape         |
-|                                                                                                | `pinterest.pindown(url)`                    | pindown.io                 |
-| <img src="https://cdn.simpleicons.org/bandcamp/1DA1F2" width="16" height="16" /> Bandcamp      | `bandcamp.bandcampdownloader(url, options)` | bandcampdownloader.app     |
-| <img src="https://cdn.simpleicons.org/pixiv/0096FA" width="16" height="16" /> Pixiv          | `pixiv.ajax(url)`                           | pixiv.net (pixiv.re proxy) |
-| <img src="https://cdn.simpleicons.org/xiaohongshu/FF2442" width="16" height="16" /> RedNote    | `rednote.direct(url)`                       | xiaohongshu.com / rednote  |
-| <img src="https://cdn.simpleicons.org/spotify/1ED760" width="16" height="16" /> Spotify        | `spotify.spotmate(url)`                     | spotmate.online            |
-|                                                                                                | `spotify.spotidown(url)`                    | spotidown.app              |
-|                                                                                                | `spotify.soundloaders(url)`                 | soundloaders.app           |
-| <img src="https://cdn.simpleicons.org/x/000000" width="16" height="16" /> Twitter / X          | `twitter.direct(url)`                       | api.fxtwitter.com          |
-|                                                                                                | `twitter.tweeload(url)`                     | tweeload.com               |
-|                                                                                                | `twitter.tvd(url)`                          | twittervideodownloader.com |
-|                                                                                                | `twitter.savetwt(url)`                      | savetwt.com                |
-| <img src="https://cdn.simpleicons.org/threads/000000" width="16" height="16" /> Threads        | `threads.threadster(url)`                   | threadster.app             |
+|                                                                                                | `bilibili.snapwc(url)`                      | snapwc.com                     |
+| <img src="https://cdn.simpleicons.org/tiktok/000000" width="16" height="16" /> Douyin          | `douyin.direct(url)`                        | direct page scrape             |
+| <img src="https://cdn.simpleicons.org/facebook/1877F2" width="16" height="16" /> Facebook      | `facebook.snapsave(url)`                    | snapsave.app                   |
+|                                                                                                | `facebook.fdown(url)`                       | fdown.net                      |
+| <img src="https://cdn.simpleicons.org/soundcloud/FF5500" width="16" height="16" /> SoundCloud  | `soundcloud.klickaud(url)`                  | klickaud.org                   |
+| <img src="https://cdn.simpleicons.org/tiktok/000000" width="16" height="16" /> TikTok          | `tiktok.snaptik(url)`                       | snaptik.app                    |
+|                                                                                                | `tiktok.tiktokio(url)`                      | tiktokio.com                   |
+|                                                                                                | `tiktok.savetik(url)`                       | savetik.co                     |
+|                                                                                                | `tiktok.ssstik(url)`                        | ssstik.io                      |
+|                                                                                                | `tiktok.tikdownloader(url)`                 | tikdownloader.io               |
+| <img src="https://cdn.simpleicons.org/youtube/FF0000" width="16" height="16" /> YouTube        | `youtube.ytmp3(url)`                        | ytmp3.mobi                     |
+|                                                                                                | `youtube.ytmp3gg(url)`                      | media.ytmp3.gg                 |
+|                                                                                                | `youtube.playlist(url)`                     | youtube.com/playlist           |
+| <img src="https://cdn.simpleicons.org/instagram/E4405F" width="16" height="16" /> Instagram    | `instagram.direct(url)`                     | direct embed scrape            |
+|                                                                                                | `instagram.indown(url)`                     | indown.io                      |
+|                                                                                                | `instagram.downreels(url)`                  | downreels.com                  |
+|                                                                                                | `instagram.snapsave(url)`                   | snapsave.app                   |
+|                                                                                                | `instagram.snapinsta(url)`                  | snapinsta.to                   |
+| <img src="https://cdn.simpleicons.org/pinterest/E60023" width="16" height="16" /> Pinterest    | `pinterest.direct(url)`                     | direct page scrape             |
+|                                                                                                | `pinterest.pindown(url)`                    | pindown.io                     |
+| <img src="https://cdn.simpleicons.org/bandcamp/1DA1F2" width="16" height="16" /> Bandcamp      | `bandcamp.bandcampdownloader(url, options)` | bandcampdownloader.app         |
+| <img src="https://cdn.simpleicons.org/pixiv/0096FA" width="16" height="16" /> Pixiv            | `pixiv.ajax(url)`                           | pixiv.net (pixiv.re proxy)     |
+| <img src="https://cdn.simpleicons.org/xiaohongshu/FF2442" width="16" height="16" /> RedNote    | `rednote.direct(url)`                       | xiaohongshu.com / rednote      |
+| <img src="https://cdn.simpleicons.org/spotify/1ED760" width="16" height="16" /> Spotify        | `spotify.spotmate(url)`                     | spotmate.online                |
+|                                                                                                | `spotify.spotidown(url)`                    | spotidown.app                  |
+|                                                                                                | `spotify.soundloaders(url)`                 | soundloaders.app               |
+| <img src="https://cdn.simpleicons.org/x/000000" width="16" height="16" /> Twitter / X          | `twitter.direct(url)`                       | api.fxtwitter.com              |
+|                                                                                                | `twitter.tweeload(url)`                     | tweeload.com                   |
+|                                                                                                | `twitter.tvd(url)`                          | twittervideodownloader.com     |
+|                                                                                                | `twitter.savetwt(url)`                      | savetwt.com                    |
+| <img src="https://cdn.simpleicons.org/threads/000000" width="16" height="16" /> Threads        | `threads.threadster(url)`                   | threadster.app                 |
 
 ---
 
 ## ⏱️ Performance
 
-| Platform    | Scraper              | Avg Time | Reliability | Notes                                     |
-| ----------- | -------------------- | -------- | ----------- | ----------------------------------------- |
-| Apple Music | `aplmate`            | ~3-5s    | ⚪ Medium   | Turnstile bypass, sometimes noise         |
-| Bilibili    | `direct`             | ~0.3-0.5s| 🟢 High     | Direct Bilibili view/playurl API          |
-| Bilibili    | `snapwc`             | ~10-15s  | 🟡 Medium   | RSA + AES handshake to snapwc.com         |
-| Douyin      | `direct`             | ~3-5s    | 🔴 Low      | Fragile: page structure changes often     |
-| Facebook    | `snapsave`           | ~4-8s    | 🟢 High     | Packed JS unpacker, dual stream           |
-| Facebook    | `fdown`              | ~8-15s   | 🟡 Medium   | Puppeteer + Chrome, Cloudflare bypass     |
-| SoundCloud  | `klickaud`           | ~20-60s  | 🟡 Medium   | SSE worker, 128kbps only                  |
-| TikTok      | `tiktokio`           | ~2-3s    | 🟢 High     | JSON API, rich metadata                   |
-| TikTok      | `snaptik`            | ~3-5s    | 🟢 High     | Challenge-response AES, IP-safe           |
-| TikTok      | `ssstik`             | ~2-4s    | 🟢 High     | Axios + Cheerio, HTMX polling             |
-| TikTok      | `savetik`            | ~8-15s   | 🟡 Medium   | Puppeteer + Chrome, Cloudflare bypass     |
-| YouTube     | `ytmp3`              | ~6-10s   | 🟢 High     | Init + poll, reliable                     |
-| Instagram   | `direct`             | ~0.5-1s  | 🟢 High     | Native embed captioned JSON, zero 3rd party |
-| Instagram   | `indown`             | ~4-6s    | 🟢 High     | Axios + Cheerio, no browser               |
-| Instagram   | `downreels`          | ~2-4s    | 🟢 High     | Direct API, lightweight                   |
-| Instagram   | `snapinsta`          | ~10-20s  | 🟡 Medium   | Playwright + stealth, Turnstile bypass    |
-| Pinterest   | `direct`             | ~0.5-1s  | 🟢 High     | Direct page parsing + pinimg extraction   |
-| Pinterest   | `pindown`            | ~3-5s    | 🟡 Medium   | pindown.io token session                  |
-| Bandcamp    | `bandcampdownloader` | ~2-4s    | 🟢 High     | Multi-track, 320kbps                      |
-| Pixiv       | `ajax`               | ~0.4s    | 🟢 High     | Direct artwork metadata + pixiv.re proxy  |
-| RedNote     | `direct`             | ~1-3s    | 🟢 High     | SSR state + OpenGraph parsing             |
-| Spotify     | `spotmate`           | ~3-5s    | 🟢 High     | CSRF + metadata                           |
-| Spotify     | `spotidown`          | ~4-6s    | 🟡 Medium   | Cookie rotation                           |
-| Twitter / X | `direct`             | ~0.3-1s  | 🟢 High     | Direct FxTwitter CDN resolver             |
-| Twitter / X | `tweeload`           | ~2-4s    | 🟢 High     | Multi-quality                             |
-| Twitter / X | `tvd`                | ~3-8s    | 🟢 High     | Direct CDN links                          |
-| Threads     | `threadster`         | ~2-4s    | 🟢 High     | JWT token decode                          |
+| Platform    | Scraper              | Avg Time  | Reliability | Notes                                       |
+| ----------- | -------------------- | --------- | ----------- | ------------------------------------------- |
+| Apple Music | `aplmate`            | ~3-5s     | ⚪ Medium   | Turnstile bypass, sometimes noise           |
+| Bilibili    | `direct`             | ~0.3-0.5s | 🟢 High     | Direct Bilibili view/playurl API            |
+| Bilibili    | `snapwc`             | ~10-15s   | 🟡 Medium   | RSA + AES handshake to snapwc.com           |
+| Douyin      | `direct`             | ~3-5s     | 🔴 Low      | Fragile: page structure changes often       |
+| Facebook    | `snapsave`           | ~4-8s     | 🟢 High     | Packed JS unpacker, dual stream             |
+| Facebook    | `fdown`              | ~8-15s    | 🟡 Medium   | Puppeteer + Chrome, Cloudflare bypass       |
+| SoundCloud  | `klickaud`           | ~20-60s   | 🟡 Medium   | SSE worker, 128kbps only                    |
+| TikTok      | `tiktokio`           | ~2-3s     | 🟢 High     | JSON API, rich metadata                     |
+| TikTok      | `snaptik`            | ~3-5s     | 🟢 High     | Challenge-response AES, IP-safe             |
+| TikTok      | `ssstik`             | ~2-4s     | 🟢 High     | Axios + Cheerio, HTMX polling               |
+| TikTok      | `savetik`            | ~8-15s    | 🟡 Medium   | Puppeteer + Chrome, Cloudflare bypass       |
+| YouTube     | `ytmp3`              | ~6-10s    | 🟢 High     | Init + poll, reliable                       |
+| Instagram   | `direct`             | ~0.5-1s   | 🟢 High     | Native embed captioned JSON, zero 3rd party |
+| Instagram   | `indown`             | ~4-6s     | 🟢 High     | Axios + Cheerio, no browser                 |
+| Instagram   | `downreels`          | ~2-4s     | 🟢 High     | Direct API, lightweight                     |
+| Instagram   | `snapinsta`          | ~10-20s   | 🟡 Medium   | Playwright + stealth, Turnstile bypass      |
+| Pinterest   | `direct`             | ~0.5-1s   | 🟢 High     | Direct page parsing + pinimg extraction     |
+| Pinterest   | `pindown`            | ~3-5s     | 🟡 Medium   | pindown.io token session                    |
+| Bandcamp    | `bandcampdownloader` | ~2-4s     | 🟢 High     | Multi-track, 320kbps                        |
+| Pixiv       | `ajax`               | ~0.4s     | 🟢 High     | Direct artwork metadata + pixiv.re proxy    |
+| RedNote     | `direct`             | ~1-3s     | 🟢 High     | SSR state + OpenGraph parsing               |
+| Spotify     | `spotmate`           | ~3-5s     | 🟢 High     | CSRF + metadata                             |
+| Spotify     | `spotidown`          | ~4-6s     | 🟡 Medium   | Cookie rotation                             |
+| Twitter / X | `direct`             | ~0.3-1s   | 🟢 High     | Direct FxTwitter CDN resolver               |
+| Twitter / X | `tweeload`           | ~2-4s     | 🟢 High     | Multi-quality                               |
+| Twitter / X | `tvd`                | ~3-8s     | 🟢 High     | Direct CDN links                            |
+| Threads     | `threadster`         | ~2-4s     | 🟢 High     | JWT token decode                            |
 
 ---
 
