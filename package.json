@@ -1,8 +1,34 @@
 {
-  "name": "scrapr",
+  "name": "@coflyn/scrapr",
   "version": "1.0.0",
   "description": "Universal social media downloader and media link resolver for Node.js (TikTok, Instagram, YouTube, Spotify, Twitter/X, and more).",
   "main": "index.js",
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coflyn/scrapr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/coflyn/scrapr/issues"
+  },
+  "homepage": "https://github.com/coflyn/scrapr#readme",
+  "keywords": [
+    "downloader",
+    "scraper",
+    "tiktok",
+    "instagram",
+    "youtube",
+    "spotify",
+    "twitter",
+    "media-downloader",
+    "social-media"
+  ],
   "scripts": {
     "test": "node test/test.js"
   },

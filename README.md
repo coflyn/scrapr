@@ -5,8 +5,11 @@
 **Universal Social Media & Streaming Downloader for Node.js.**  
 _Extract direct MP4, MP3, and image links from TikTok, Instagram, YouTube, Spotify, Twitter/X, and 10+ platforms._
 
+[![npm version](https://img.shields.io/npm/v/@coflyn/scrapr.svg?style=flat-square)](https://www.npmjs.com/package/@coflyn/scrapr)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![node version](https://img.shields.io/badge/node-%3E%3D%2016.x-61afef.svg?style=flat-square)](https://nodejs.org)
+[![platforms](https://img.shields.io/badge/platforms-15-brightgreen.svg?style=flat-square)](#-api-reference)
+[![GitHub stars](https://img.shields.io/github/stars/coflyn/scrapr?style=flat-square)](https://github.com/coflyn/scrapr/stargazers)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 <br/>
@@ -35,13 +38,13 @@ _Extract direct MP4, MP3, and image links from TikTok, Instagram, YouTube, Spoti
 ## 📦 Installation
 
 ```bash
-npm install git+https://github.com/coflyn/scrapr.git
+npm install @coflyn/scrapr
 ```
 
-For local development:
+Or install directly from GitHub:
 
 ```bash
-npm install /path/to/scrapr
+npm install git+https://github.com/coflyn/scrapr.git
 ```
 
 ---
@@ -51,7 +54,7 @@ npm install /path/to/scrapr
 ### Single media
 
 ```javascript
-const { tiktok, spotify } = require("scrapr");
+const { tiktok, spotify } = require("@coflyn/scrapr");
 
 (async () => {
   const tiktokRes = await tiktok.tiktokio(
@@ -74,7 +77,7 @@ const { tiktok, spotify } = require("scrapr");
 ### Album / Playlist (Bandcamp)
 
 ```javascript
-const { bandcamp } = require("scrapr");
+const { bandcamp } = require("@coflyn/scrapr");
 
 (async () => {
   const res = await bandcamp.bandcampdownloader(
@@ -88,7 +91,7 @@ const { bandcamp } = require("scrapr");
 ### Fallback chain
 
 ```javascript
-const { tiktok } = require("scrapr");
+const { tiktok } = require("@coflyn/scrapr");
 
 async function resolveTikTok(url) {
   const fallbacks = [tiktok.tiktokio, tiktok.snaptik];
@@ -107,15 +110,15 @@ async function resolveTikTok(url) {
 ### CommonJS
 
 ```js
-const scrapr = require("scrapr");
-const { tiktok, spotify, twitter } = require("scrapr");
+const scrapr = require("@coflyn/scrapr");
+const { tiktok, spotify, twitter } = require("@coflyn/scrapr");
 ```
 
 ### ESM
 
 ```js
-import scrapr from "scrapr";
-import { tiktok, spotify } from "scrapr";
+import scrapr from "@coflyn/scrapr";
+import { tiktok, spotify } from "@coflyn/scrapr";
 ```
 
 ---
