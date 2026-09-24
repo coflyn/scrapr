@@ -1,7 +1,7 @@
 {
   "name": "scrapr",
   "version": "1.0.0",
-  "description": "Lightweight Node.js library for resolving multimedia links via direct platform APIs and scraper services. Built for bots and backend applications.",
+  "description": "Universal social media downloader and media link resolver for Node.js (TikTok, Instagram, YouTube, Spotify, Twitter/X, and more).",
   "main": "index.js",
   "scripts": {
     "test": "node test/test.js"
@@ -9,14 +9,16 @@
   "license": "MIT",
   "author": "coflyn",
   "dependencies": {
-    "@playwright/test": "^1.61.1",
     "axios": "^1.7.0",
-    "cheerio": "^1.0.0",
-    "playwright": "^1.61.1"
+    "cheerio": "^1.0.0"
   },
   "optionalDependencies": {
+    "playwright": "^1.61.1",
     "playwright-extra": "4.3.6",
     "puppeteer-core": "^25.3.0",
     "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1"
   }
 }

@@ -1,8 +1,9 @@
 <div align="center">
 
-# 📐 scrapr
+# scrapr
 
-**Lightweight Node.js library for resolving multimedia links via direct platform APIs and scraper services. Built for bots and backend applications.**
+**Universal Social Media & Streaming Downloader for Node.js.**  
+_Extract direct MP4, MP3, and image links from TikTok, Instagram, YouTube, Spotify, Twitter/X, and 10+ platforms._
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![node version](https://img.shields.io/badge/node-%3E%3D%2016.x-61afef.svg?style=flat-square)](https://nodejs.org)
@@ -13,76 +14,31 @@
 <img src=".github/assets/banner.png" alt="scrapr banner" width="100%" />
 
 <br/>
+<br/>
+
+`TikTok` • `Instagram` • `YouTube` • `Spotify` • `Twitter / X` • `Facebook` • `SoundCloud` • `Pinterest` • `Apple Music` • `Bilibili` • `Douyin` • `Bandcamp` • `Threads` • `Pixiv` • `RedNote`
+
+<br/>
 
 <a href="https://sociabuzz.com/coflyn/tribe" target="_blank">
   <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="60" />
 </a>
 
----
-
-[Key Features](#-key-features) • [Prerequisites](#-prerequisites) • [Folder Structure](#-folder-structure) • [Installation](#-installation) • [Import Styles](#-import-styles) • [Quick Start](#-quick-start) • [Response Schema](#-response-schema) • [Configuration](#-configuration) • [Error Handling](#-error-handling) • [API Reference](#-api-reference) • [Performance](#-performance) • [Contributing](#-contributing) • [Security](#-security) • [Issues & Requests](#-issues--requests)
-
 </div>
 
-## ✨ Key Features
-
-- **Modular Scraper Engine:** Lightweight HTTP parsers (`axios`, `cheerio`) for most platforms, with optional browser automation (Puppeteer, Playwright) for Cloudflare-bypassed scrapers.
-- **Unified JSON Schema:** Every scraper speaks the same language: normalized response shape with title, thumbnail, type flags, and media download array.
-- **Platform Redundancy:** Multiple scrapers per platform (TikTok x4, Instagram x3, YouTube, etc.) stacked as fallbacks when upstream services shift or go dark.
-- **Fast Lightweight Responses:** Direct API and page parsing instead of waiting for heavyweight browser render trees. Most requests resolve in 2 to 6 seconds.
-
 ---
 
-## 📋 Prerequisites
-
-- **Node.js** >= 16.x
-- **npm** or **yarn**
-
-### Runtime Dependencies
-
-| Dependency | Version | Purpose                      |
-| ---------- | ------- | ---------------------------- |
-| `axios`    | ^1.7.0  | HTTP client                  |
-| `cheerio`  | ^1.0.0  | HTML parsing & DOM traversal |
-
-### Optional: Headless Browser Fallback
-
-Most scrapers use lightweight HTTP + DOM parsing only. Some scrapers require a browser for Cloudflare bypass:
-
-```bash
-# For savetik (TikTok) & fdown (Facebook) (requires Google Chrome installed)
-npm install puppeteer-core
-
-# For snapinsta (Instagram)
-npm install playwright-extra puppeteer-extra-plugin-stealth
-npm install playwright  # browser binaries
-```
-
----
-
-## 📁 Folder Structure
-
-```text
-scrapr/
-├── index.js                  # Entry point: exports all platform modules
-└── lib/
-    └── <platform>/           # Platform namespace (e.g. tiktok, instagram)
-        ├── index.js          # Platform export aggregator
-        └── <method>/         # Scraper implementation
-            └── index.js      # Exports { scrape }
-```
+> **What is scrapr?** A media link extractor. Give it a social media or streaming URL and it returns direct downloadable links (MP4, MP3, images) with metadata. Not a general web crawler or HTML scraping toolkit.
 
 ---
 
 ## 📦 Installation
 
-Install the package directly from your repository URL:
-
 ```bash
 npm install git+https://github.com/coflyn/scrapr.git
 ```
 
-Or for local development / testing:
+For local development:
 
 ```bash
 npm install /path/to/scrapr
@@ -90,34 +46,14 @@ npm install /path/to/scrapr
 
 ---
 
-## 📥 Import Styles
-
-### CommonJS (default)
-
-```js
-const scrapr = require("scrapr");
-// Or destructure individual platforms:
-const { tiktok, spotify, twitter } = require("scrapr");
-```
-
-### ESM / TypeScript
-
-```js
-import scrapr from "scrapr";
-import { tiktok, spotify } from "scrapr";
-```
-
----
-
 ## 🚀 Quick Start
 
-### Single Media Download
+### Single media
 
 ```javascript
 const { tiktok, spotify } = require("scrapr");
 
 (async () => {
-  // 1. TikTok video
   const tiktokRes = await tiktok.tiktokio(
     "https://www.tiktok.com/@_coflyn/video/7662892911448558865",
   );
@@ -126,7 +62,6 @@ const { tiktok, spotify } = require("scrapr");
     console.log("Downloads:", tiktokRes.result.downloads);
   }
 
-  // 2. Spotify track
   const spotifyRes = await spotify.spotmate(
     "https://open.spotify.com/track/5WOSNVChcadlsCRiqXE45K",
   );
@@ -150,7 +85,7 @@ const { bandcamp } = require("scrapr");
 })();
 ```
 
-### Fallback Chain Pattern
+### Fallback chain
 
 ```javascript
 const { tiktok } = require("scrapr");
@@ -167,11 +102,27 @@ async function resolveTikTok(url) {
 
 ---
 
+## 📥 Import
+
+### CommonJS
+
+```js
+const scrapr = require("scrapr");
+const { tiktok, spotify, twitter } = require("scrapr");
+```
+
+### ESM
+
+```js
+import scrapr from "scrapr";
+import { tiktok, spotify } from "scrapr";
+```
+
+---
+
 ## 📋 Response Schema
 
-All scrapers resolve into a standardized JSON payload structure:
-
-### Success Response
+### Single media
 
 ```json
 {
@@ -191,58 +142,36 @@ All scrapers resolve into a standardized JSON payload structure:
 }
 ```
 
-### Failure Response
+### Playlist / Album
+
+For `youtube.playlist` and `bandcamp.bandcampdownloader`:
+
+```json
+{
+  "status": true,
+  "result": {
+    "title": "Playlist or Album Title",
+    "type": "playlist",
+    "itemCount": 10,
+    "items": [
+      {
+        "id": "dQw4w9WgXcQ",
+        "title": "Track / Video Title",
+        "author": "Artist or Channel Name",
+        "thumbnail": "https://cdn.example.com/cover.jpg",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      }
+    ]
+  }
+}
+```
+
+### Failure
 
 ```json
 {
   "status": false,
   "message": "Error description / platform rate limit message"
-}
-```
-
----
-
-## ⚙️ Configuration
-
-### Global Timeout
-
-```js
-const axios = require("axios");
-axios.defaults.timeout = 30000; // 30s
-```
-
-### Proxy
-
-```js
-const axios = require("axios");
-const HttpsProxyAgent = require("https-proxy-agent");
-axios.defaults.httpsAgent = new HttpsProxyAgent("http://proxy:8080");
-```
-
----
-
-## 🛠️ Error Handling
-
-### Common Error Patterns
-
-| Error                                 | Likely Cause                 | Fix                                |
-| ------------------------------------- | ---------------------------- | ---------------------------------- |
-| `Request failed with status code 4xx` | Upstream changed or blocked  | Try alternate scraper              |
-| `Could not extract CSRF token`        | Page structure changed       | [Report issue](#-issues--requests) |
-| `No download links found`             | Private content or dead link | Check URL accessibility            |
-| `socket hang up` / `ETIMEDOUT`        | Network issue / rate limit   | Retry with delay or proxy          |
-| `Cannot read properties of undefined` | Parser mismatch              | [Report issue](#-issues--requests) |
-
-### Fallback Chain Pattern
-
-```javascript
-async function resolveInstagram(url) {
-  const scrapers = [instagram.indown, instagram.downreels];
-  for (const s of scrapers) {
-    const res = await s(url);
-    if (res.status) return res.result;
-  }
-  return null;
 }
 ```
 
@@ -288,7 +217,7 @@ async function resolveInstagram(url) {
 
 ---
 
-## ⏱️ Performance
+## ⚡ Performance
 
 | Platform    | Scraper              | Avg Time  | Reliability | Notes                                       |
 | ----------- | -------------------- | --------- | ----------- | ------------------------------------------- |
@@ -322,6 +251,78 @@ async function resolveInstagram(url) {
 
 ---
 
+## 🛠️ Error Handling
+
+| Error                                 | Likely Cause                 | Fix                                |
+| ------------------------------------- | ---------------------------- | ---------------------------------- |
+| `Request failed with status code 4xx` | Upstream changed or blocked  | Try alternate scraper              |
+| `Could not extract CSRF token`        | Page structure changed       | [Report issue](#-issues--requests) |
+| `No download links found`             | Private content or dead link | Check URL accessibility            |
+| `socket hang up` / `ETIMEDOUT`        | Network issue / rate limit   | Retry with delay or proxy          |
+| `Cannot read properties of undefined` | Parser mismatch              | [Report issue](#-issues--requests) |
+
+---
+
+## ⚙️ Configuration
+
+### Global timeout
+
+```js
+const axios = require("axios");
+axios.defaults.timeout = 30000; // 30s
+```
+
+### Proxy
+
+```js
+const axios = require("axios");
+const HttpsProxyAgent = require("https-proxy-agent");
+axios.defaults.httpsAgent = new HttpsProxyAgent("http://proxy:8080");
+```
+
+---
+
+## 🗂️ Folder Structure
+
+```text
+scrapr/
+├── index.js                  # Entry point: exports all platform modules
+└── lib/
+    └── <platform>/           # Platform namespace (e.g. tiktok, instagram)
+        ├── index.js          # Platform export aggregator
+        └── <method>/         # Scraper implementation
+            └── index.js      # Exports { scrape }
+```
+
+---
+
+## 🧩 Prerequisites
+
+- **Node.js** >= 16.x
+- **npm** or **yarn**
+
+### Runtime dependencies
+
+| Dependency | Version | Purpose                      |
+| ---------- | ------- | ---------------------------- |
+| `axios`    | ^1.7.0  | HTTP client                  |
+| `cheerio`  | ^1.0.0  | HTML parsing & DOM traversal |
+
+### Optional: Headless browser fallback
+
+Most scrapers use lightweight HTTP + DOM parsing only. Some require a browser for Cloudflare bypass:
+
+```bash
+# For savetik (TikTok) & fdown (Facebook) — requires Google Chrome installed
+npm install puppeteer-core
+
+# For snapinsta (Instagram)
+npm install playwright-extra puppeteer-extra-plugin-stealth
+npm install playwright
+```
+
+---
+
 ## 🤝 Contributing
 
 Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for architecture details, response schemas, and verification instructions.
@@ -340,7 +341,19 @@ For security vulnerabilities and responsible disclosure, please refer to [SECURI
 
 If you encounter any issues, broken scrapers, or request errors (which can happen frequently as source web pages update their endpoints), please open an issue.
 
-You can also open an issue if you would like to request support for a new platform or scraper.
+You can also open an issue to request support for a new platform or scraper.
+
+---
+
+## ⚖️ Disclaimer & Removal Requests
+
+### Upstream disclaimer
+
+This project is an open-source library that parses publicly available data. Source websites and third-party APIs can modify their markup, anti-bot mechanisms, or rate limits at any time.
+
+### Service owner takedown policy
+
+If you are the owner, operator, or authorized representative of any website or service supported in this project and would like your service removed from this repository, please [open an issue](https://github.com/coflyn/scrapr/issues) with the title prefix `[Removal Request]`. We respect website operators and will promptly honor removal requests.
 
 ---
 
