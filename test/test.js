@@ -64,6 +64,14 @@ const SAMPLES = {
     url: "https://www.rednote.com/discovery/item/6a6b303000000000320207f9",
     methods: ["direct"],
   },
+  reddit: {
+    url: "https://www.reddit.com/r/indonesia/s/FhrWISKmrS",
+    methods: ["rapidsave"],
+  },
+  terabox: {
+    url: "https://www.terabox.com/wap/share/filelist?surl=rIMSgmDoO4oZKpgQhsoeig",
+    methods: ["sechno"],
+  },
 };
 
 function validateSchema(payload) {

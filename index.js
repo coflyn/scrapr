@@ -13,6 +13,8 @@ const facebook = require("./lib/facebook");
 const threads = require("./lib/threads");
 const pixiv = require("./lib/pixiv");
 const rednote = require("./lib/rednote");
+const reddit = require("./lib/reddit");
+const terabox = require("./lib/terabox");
 
 module.exports = {
   bilibili,
@@ -30,4 +32,6 @@ module.exports = {
   threads,
   pixiv,
   rednote,
+  reddit,
+  terabox,
 };
