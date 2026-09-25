@@ -8,7 +8,7 @@ _Extract direct MP4, MP3, and image links from TikTok, Instagram, YouTube, Spoti
 [![npm version](https://img.shields.io/npm/v/@coflyn/scrapr.svg?style=flat-square)](https://www.npmjs.com/package/@coflyn/scrapr)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![node version](https://img.shields.io/badge/node-%3E%3D%2016.x-61afef.svg?style=flat-square)](https://nodejs.org)
-[![platforms](https://img.shields.io/badge/platforms-15-brightgreen.svg?style=flat-square)](#-api-reference)
+[![platforms](https://img.shields.io/badge/platforms-17-brightgreen.svg?style=flat-square)](#-api-reference)
 [![GitHub stars](https://img.shields.io/github/stars/coflyn/scrapr?style=flat-square)](https://github.com/coflyn/scrapr/stargazers)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
@@ -19,7 +19,7 @@ _Extract direct MP4, MP3, and image links from TikTok, Instagram, YouTube, Spoti
 <br/>
 <br/>
 
-`TikTok` • `Instagram` • `YouTube` • `Spotify` • `Twitter / X` • `Facebook` • `SoundCloud` • `Pinterest` • `Apple Music` • `Bilibili` • `Douyin` • `Bandcamp` • `Threads` • `Pixiv` • `RedNote`
+`TikTok` • `Instagram` • `YouTube` • `Spotify` • `Twitter / X` • `Facebook` • `SoundCloud` • `Pinterest` • `Apple Music` • `Bilibili` • `Douyin` • `Bandcamp` • `Threads` • `Pixiv` • `RedNote` • `Reddit` • `TeraBox`
 
 <br/>
 
@@ -199,7 +199,7 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 |                                                                                                | `youtube.ytmp3gg(url)`                      | media.ytmp3.gg                 |
 |                                                                                                | `youtube.playlist(url)`                     | youtube.com/playlist           |
 | <img src="https://cdn.simpleicons.org/instagram/E4405F" width="16" height="16" /> Instagram    | `instagram.direct(url)`                     | direct embed scrape            |
-|                                                                                                | `instagram.indown(url)`                     | indown.io                      |
+|                                                                                                | `instagram.indown(url)`                     | indown.net                     |
 |                                                                                                | `instagram.downreels(url)`                  | downreels.com                  |
 |                                                                                                | `instagram.snapsave(url)`                   | snapsave.app                   |
 |                                                                                                | `instagram.snapinsta(url)`                  | snapinsta.to                   |
@@ -216,6 +216,8 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 |                                                                                                | `twitter.tvd(url)`                          | twittervideodownloader.com     |
 |                                                                                                | `twitter.savetwt(url)`                      | savetwt.com                    |
 | <img src="https://cdn.simpleicons.org/threads/000000" width="16" height="16" /> Threads        | `threads.threadster(url)`                   | threadster.app                 |
+| <img src="https://cdn.simpleicons.org/reddit/FF4500" width="16" height="16" /> Reddit          | `reddit.rapidsave(url)`                     | rapidsave.com                  |
+| <img src="https://cdn.simpleicons.org/box/0061D5" width="16" height="16" /> TeraBox           | `terabox.sechno(url)`                       | sechno.com                     |
 
 ---
 
@@ -237,7 +239,7 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 | YouTube     | `ytmp3`              | ~6-10s    | 🟢 High     | Init + poll, reliable                       |
 | Instagram   | `direct`             | ~0.5-1s   | 🟢 High     | Native embed captioned JSON, zero 3rd party |
 | Instagram   | `downreels`          | ~2-4s     | 🟢 High     | Direct API, lightweight                     |
-| Instagram   | `indown`             | —         | 🔴 Degraded | Cloudflare 403 challenge on indown.io       |
+| Instagram   | `indown`             | ~1-2s     | 🟢 High     | Direct indown.net API, zero Cloudflare block|
 | Instagram   | `snapsave`           | ~4-8s     | 🟡 Medium   | Upstream rate-limiting                      |
 | Instagram   | `snapinsta`          | ~10-20s   | 🟡 Medium   | Requires Playwright browser binary          |
 | Pinterest   | `direct`             | ~0.5-1s   | 🟢 High     | Direct page parsing + pinimg extraction     |
@@ -245,6 +247,8 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 | Bandcamp    | `bandcampdownloader` | —         | 🔴 Degraded | Cloudflare 403 challenge on upstream        |
 | Pixiv       | `ajax`               | ~0.4s     | 🟢 High     | Official oEmbed + pixiv.re proxy fallback   |
 | RedNote     | `direct`             | ~1-2s     | 🟢 High     | SSR state + OpenGraph parsing               |
+| Reddit      | `rapidsave`          | ~1-2s     | 🟢 High     | RapidSave video + separate audio stream     |
+| TeraBox     | `sechno`             | ~1-3s     | 🟢 High     | Direct download link + fast m3u8 streaming  |
 | Spotify     | `soundloaders`       | ~3-5s     | 🟢 High     | Direct Soundloaders stream resolver         |
 | Spotify     | `spotmate`           | —         | 🔴 Degraded | Upstream 422 error                          |
 | Spotify     | `spotidown`          | —         | 🔴 Degraded | Session expired upstream                    |
