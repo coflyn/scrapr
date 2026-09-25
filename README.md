@@ -225,7 +225,7 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 | ----------- | -------------------- | --------- | ----------- | ------------------------------------------- |
 | Apple Music | `aplmate`            | ~3-5s     | ⚪ Medium   | Turnstile bypass, sometimes noise           |
 | Bilibili    | `direct`             | ~0.3-0.5s | 🟢 High     | Direct Bilibili view/playurl API            |
-| Douyin      | `direct`             | —         | 🔴 Broken   | Blocked by ByteDance ACrawler challenge     |
+| Douyin      | `direct`             | ~1-2s     | 🟢 High     | Direct iesdouyin SSR + ttwid handshake      |
 | Facebook    | `snapsave`           | ~4-8s     | 🟢 High     | Packed JS unpacker, dual stream             |
 | Facebook    | `fdown`              | ~8-15s    | 🟡 Medium   | Puppeteer + Chrome, Cloudflare bypass       |
 | SoundCloud  | `klickaud`           | ~4-6s     | 🟢 High     | Dynamic CSRF + SSE capability grant         |
@@ -244,7 +244,7 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 | Pinterest   | `pindown`            | —         | 🔴 Degraded | Token verification failure                  |
 | Bandcamp    | `bandcampdownloader` | —         | 🔴 Degraded | Cloudflare 403 challenge on upstream        |
 | Pixiv       | `ajax`               | ~0.4s     | 🟢 High     | Official oEmbed + pixiv.re proxy fallback   |
-| RedNote     | `direct`             | —         | 🔴 Broken   | Blocked by Xiaohongshu anti-bot 302         |
+| RedNote     | `direct`             | ~1-2s     | 🟢 High     | SSR state + OpenGraph parsing               |
 | Spotify     | `soundloaders`       | ~3-5s     | 🟢 High     | Direct Soundloaders stream resolver         |
 | Spotify     | `spotmate`           | —         | 🔴 Degraded | Upstream 422 error                          |
 | Spotify     | `spotidown`          | —         | 🔴 Degraded | Session expired upstream                    |

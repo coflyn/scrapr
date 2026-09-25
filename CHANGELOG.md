@@ -5,16 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2026-09-25
+
+### Fixed
+
+- `rednote.direct`: Turns out the scraper was never actually broken, we were just testing an expired link the whole time (total skill issue on our end lol). Confirmed 100% alive and working.
+- `douyin.direct`: Fixed video extraction by porting Mori engine's shortlink resolver, `ttwid` cookie handshake, and 400ms retry so ByteDance stops rage-blocking SSR hydration.
+- `README.md`: Promoted Douyin and RedNote back to High reliability where they belong.
+
 ## [1.0.1] - 2026-09-25
 
 ### Fixed
+
 - `soundcloud.klickaud`: Fixed 403 Forbidden via dynamic CSRF token extraction and SSE capability grant authorization.
 - `pixiv.ajax`: Fixed 403 Forbidden on direct artwork queries via official oEmbed endpoint and `pixiv.re` proxy fallback.
 
 ### Removed
+
 - `bilibili.snapwc`: Removed dead scraper due to upstream SnapWC architecture migration to SPA.
 
 ### Deprecated / Status Updates
+
 - `douyin.direct`: Marked broken (blocked by ByteDance ACrawler JS challenge).
 - `rednote.direct`: Marked broken (blocked by Xiaohongshu anti-bot redirect 302).
 - `tiktok.tikdownloader`: Marked broken (Cloudflare 403 challenge on tikdownloader.io).
@@ -24,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2026-09-25
 
 ### Added
+
 - Initial public release on npm as `@coflyn/scrapr`.
 - Support for 15 multimedia platforms:
   - **Video**: TikTok, Instagram, YouTube, Douyin, Bilibili, Facebook, Twitter / X, Threads, RedNote.

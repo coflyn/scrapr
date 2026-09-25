@@ -8,7 +8,8 @@ const SAMPLES = {
   },
   youtube: {
     url: "https://youtu.be/RxiTWxP9Xf4",
-    playlistUrl: "https://www.youtube.com/playlist?list=PLrEnWoR732-BHrPp_Pm8_VleD68f9n14-",
+    playlistUrl:
+      "https://www.youtube.com/playlist?list=PLrEnWoR732-BHrPp_Pm8_VleD68f9n14-",
     methods: ["ytmp3", "ytmp3gg", "playlist"],
   },
   instagram: {
@@ -48,7 +49,7 @@ const SAMPLES = {
     methods: ["snapsave", "fdown"],
   },
   douyin: {
-    url: "https://v.douyin.com/i8N5B1C/",
+    url: "https://v.douyin.com/o-P-4yQzt5c/",
     methods: ["direct"],
   },
   bilibili: {
@@ -60,7 +61,7 @@ const SAMPLES = {
     methods: ["ajax"],
   },
   rednote: {
-    url: "https://www.xiaohongshu.com/explore/65e94b29000000000b032d67",
+    url: "https://www.rednote.com/discovery/item/6a6b303000000000320207f9",
     methods: ["direct"],
   },
 };
