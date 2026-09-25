@@ -50,7 +50,7 @@ Place your implementation inside `lib/<platform>/<method>/index.js`:
 const axios = require("axios");
 const cheerio = require("cheerio");
 
-async function download(url) {
+async function scrape(url) {
   if (!url) {
     throw new Error("URL is required");
   }
@@ -73,12 +73,19 @@ async function download(url) {
   };
 }
 
-module.exports = download;
+module.exports = { scrape };
 ```
 
 ### 2. Export the Scraper
 
-1. Export the new method in `lib/<platform>/index.js`.
+1. Export the new method in `lib/<platform>/index.js`:
+   ```javascript
+   const mymethod = require("./mymethod").scrape;
+
+   module.exports = {
+     mymethod,
+   };
+   ```
 2. Ensure the platform is exported in the root `index.js`.
 
 ### 3. Response Schema Contract
@@ -98,9 +105,28 @@ Every scraper output must conform to this structure:
 
 ---
 
-## Manual Verification
+## Verification & Testing
 
-Run a one-line Node.js command to test your scraper against real media URLs:
+### 1. Automated Tests
+
+Register a valid sample URL in `test/test.js` under `SAMPLES`:
+
+```javascript
+<platform>: {
+  url: "https://...",
+  methods: ["<method>"],
+}
+```
+
+Run the test suite:
+
+```bash
+npm test
+```
+
+### 2. Quick One-Line Test
+
+Test your scraper directly against a live URL:
 
 ```bash
 node -e "const scrapr = require('./index'); scrapr.<platform>.<method>('<valid-test-url>').then(console.log).catch(console.error);"
@@ -109,7 +135,7 @@ node -e "const scrapr = require('./index'); scrapr.<platform>.<method>('<valid-t
 Verify that:
 - The command resolves with HTTP 200 URLs.
 - The returned payload adheres strictly to the response schema.
-- Invalid or dead URLs throw a clear error message instead of hanging indefinitely.
+- Invalid or dead URLs return `{ status: false, message: ... }` instead of unhandled rejections.
 
 ---
 
