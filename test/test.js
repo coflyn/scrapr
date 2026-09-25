@@ -53,10 +53,10 @@ const SAMPLES = {
   },
   bilibili: {
     url: "https://www.bilibili.com/video/BV1xx411c7mD",
-    methods: ["direct", "snapwc"],
+    methods: ["direct"],
   },
   pixiv: {
-    url: "https://www.pixiv.net/en/artworks/115986071",
+    url: "https://www.pixiv.net/en/artworks/150068059",
     methods: ["ajax"],
   },
   rednote: {

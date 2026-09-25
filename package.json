@@ -1,6 +1,6 @@
 {
   "name": "@coflyn/scrapr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Universal social media downloader and media link resolver for Node.js (TikTok, Instagram, YouTube, Spotify, Twitter/X, and more).",
   "main": "index.js",
   "files": [
