@@ -54,10 +54,10 @@ npm install git+https://github.com/coflyn/scrapr.git
 ### Single media
 
 ```javascript
-const { tiktok, spotify } = require("@coflyn/scrapr");
+const { tiktok, twitter } = require("@coflyn/scrapr");
 
 (async () => {
-  const tiktokRes = await tiktok.tiktokio(
+  const tiktokRes = await tiktok.snaptik(
     "https://www.tiktok.com/@_coflyn/video/7662892911448558865",
   );
   if (tiktokRes.status) {
@@ -65,11 +65,11 @@ const { tiktok, spotify } = require("@coflyn/scrapr");
     console.log("Downloads:", tiktokRes.result.downloads);
   }
 
-  const spotifyRes = await spotify.spotmate(
-    "https://open.spotify.com/track/5WOSNVChcadlsCRiqXE45K",
+  const twitterRes = await twitter.direct(
+    "https://twitter.com/Interior/status/463440424141459456",
   );
-  if (spotifyRes.status) {
-    console.log("Audio URL:", spotifyRes.result.downloads[0].url);
+  if (twitterRes.status) {
+    console.log("Media URL:", twitterRes.result.downloads[0].url);
   }
 })();
 ```
@@ -94,7 +94,7 @@ const { bandcamp } = require("@coflyn/scrapr");
 const { tiktok } = require("@coflyn/scrapr");
 
 async function resolveTikTok(url) {
-  const fallbacks = [tiktok.tiktokio, tiktok.snaptik];
+  const fallbacks = [tiktok.snaptik, tiktok.ssstik];
   for (const scraper of fallbacks) {
     const res = await scraper(url);
     if (res.status) return res.result;
@@ -321,7 +321,7 @@ scrapr/
 Most scrapers use lightweight HTTP + DOM parsing only. Some require a browser for Cloudflare bypass:
 
 ```bash
-# For savetik (TikTok) & fdown (Facebook) — requires Google Chrome installed
+# For savetik (TikTok) & fdown (Facebook): requires Google Chrome installed
 npm install puppeteer-core
 
 # For snapinsta (Instagram)
