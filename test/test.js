@@ -9,7 +9,7 @@ const SAMPLES = {
   youtube: {
     url: "https://youtu.be/RxiTWxP9Xf4",
     playlistUrl:
-      "https://www.youtube.com/playlist?list=PLrEnWoR732-BHrPp_Pm8_VleD68f9n14-",
+      "https://www.youtube.com/playlist?list=PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
     methods: ["ytmp3", "ytmp3gg", "playlist"],
   },
   instagram: {
@@ -22,14 +22,14 @@ const SAMPLES = {
   },
   spotify: {
     url: "https://open.spotify.com/track/2FZIabCRMEWAYfN69Ijn1U?si=2d77949e6a3541d3",
-    methods: ["spotmate", "spotidown", "soundloaders"],
+    methods: ["spotmate", "spotidown", "soundloaders", "spotisaver"],
   },
   bandcamp: {
     url: "https://tycho.bandcamp.com/track/awake",
     methods: ["bandcampdownloader"],
   },
   pinterest: {
-    url: "https://www.pinterest.com/pin/1012606416174246835/",
+    url: "https://www.pinterest.com/pin/298363544078970034/",
     methods: ["direct", "pindown"],
   },
   threads: {
@@ -179,15 +179,17 @@ async function run() {
     }
 
     const start = Date.now();
+    let timer;
     try {
-      const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Timeout (15s exceeded)")), 15000),
-      );
+      const timeoutPromise = new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error("Timeout (15s exceeded)")), 15000);
+      });
       const testUrl =
         method === "playlist" && config.playlistUrl
           ? config.playlistUrl
           : config.url;
       const res = await Promise.race([fn(testUrl), timeoutPromise]);
+      clearTimeout(timer);
       validateSchema(res);
       const elapsed = ((Date.now() - start) / 1000).toFixed(2);
 
@@ -203,6 +205,7 @@ async function run() {
         upstreamErrors++;
       }
     } catch (err) {
+      if (timer) clearTimeout(timer);
       const elapsed = ((Date.now() - start) / 1000).toFixed(2);
       console.log(
         `\n[x] ${platform}.${method}: CRASH (${elapsed}s) -> ${err.message}`,
