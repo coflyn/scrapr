@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-09-27
+
+### Added
+
+- `spotify.spotisaver`: Added Spotify track, album, and playlist resolver powered by Spotisaver engine (`spotisaver.net`) with dynamic signature handshake, direct 320kbps MP3 stream, and `result.getAudioBuffer()` helper.
+
+### Fixed
+
+- `pinterest.pindown`: Fixed verification challenge solver implementing AES-256-CBC payload decryption and dynamic seed handshake from `pindown.io/js/script.js?v=1.2`.
+- `youtube.playlist`: Added parser for YouTube's modern `lockupViewModel` and `pageHeaderRenderer` structure in `ytInitialData`.
+- `instagram.snapsave`: Replaced legacy decoder with modern obfuscated script unpacker and direct media resolution.
+- `instagram.snapinsta`: Added automated system Chrome/Chromium detection to Playwright launcher.
+- `spotify.spotidown`: Fixed track resolution by porting Mori engine session handling and dummy token handshake, restoring direct 320kbps MP3 link extraction.
+- `README.md`: Updated Spotify performance matrix with Spotisaver and fixed SpotiDown.
+
 ## [1.0.3] - 2026-09-26
 
 ### Added

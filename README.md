@@ -208,8 +208,9 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 | <img src="https://cdn.simpleicons.org/bandcamp/1DA1F2" width="16" height="16" /> Bandcamp      | `bandcamp.bandcampdownloader(url, options)` | bandcampdownloader.app         |
 | <img src="https://cdn.simpleicons.org/pixiv/0096FA" width="16" height="16" /> Pixiv            | `pixiv.ajax(url)`                           | pixiv.net (pixiv.re proxy)     |
 | <img src="https://cdn.simpleicons.org/xiaohongshu/FF2442" width="16" height="16" /> RedNote    | `rednote.direct(url)`                       | xiaohongshu.com / rednote      |
-| <img src="https://cdn.simpleicons.org/spotify/1ED760" width="16" height="16" /> Spotify        | `spotify.spotmate(url)`                     | spotmate.online                |
+| <img src="https://cdn.simpleicons.org/spotify/1ED760" width="16" height="16" /> Spotify        | `spotify.spotisaver(url)`                   | spotisaver.net                 |
 |                                                                                                | `spotify.spotidown(url)`                    | spotidown.app                  |
+|                                                                                                | `spotify.spotmate(url)`                     | spotmate.online                |
 |                                                                                                | `spotify.soundloaders(url)`                 | soundloaders.app               |
 | <img src="https://cdn.simpleicons.org/x/000000" width="16" height="16" /> Twitter / X          | `twitter.direct(url)`                       | api.fxtwitter.com              |
 |                                                                                                | `twitter.tweeload(url)`                     | tweeload.com                   |
@@ -237,25 +238,28 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 | TikTok      | `savetik`            | ~5-8s     | 🟢 High     | High quality streams, active                |
 | TikTok      | `tikdownloader`      | —         | 🔴 Broken   | Cloudflare 403 challenge on tikdownloader.io|
 | YouTube     | `ytmp3`              | ~6-10s    | 🟢 High     | Init + poll, reliable                       |
+| YouTube     | `playlist`           | ~2-3s     | 🟢 High     | Parsed via ytInitialData lockupViewModel    |
 | Instagram   | `direct`             | ~0.5-1s   | 🟢 High     | Native embed captioned JSON, zero 3rd party |
-| Instagram   | `downreels`          | ~2-4s     | 🟢 High     | Direct API, lightweight                     |
+| Instagram   | `downreels`          | —         | 🔴 Degraded | Upstream api.zoraahub.com unreachable (523) |
 | Instagram   | `indown`             | ~1-2s     | 🟢 High     | Direct indown.net API, zero Cloudflare block|
-| Instagram   | `snapsave`           | ~4-8s     | 🟡 Medium   | Upstream rate-limiting                      |
-| Instagram   | `snapinsta`          | ~10-20s   | 🟡 Medium   | Requires Playwright browser binary          |
+| Instagram   | `snapsave`           | ~0.2-1s   | 🟢 High     | Obfuscated script unpacker & rapidcdn stream|
+| Instagram   | `snapinsta`          | ~10-15s   | 🟢 High     | Playwright stealth + auto-detect system Chrome |
 | Pinterest   | `direct`             | ~0.5-1s   | 🟢 High     | Direct page parsing + pinimg extraction     |
-| Pinterest   | `pindown`            | —         | 🔴 Degraded | Token verification failure                  |
+| Pinterest   | `pindown`            | ~1-2s     | 🟢 High     | AES-256-CBC challenge solver & dynamic seed |
 | Bandcamp    | `bandcampdownloader` | —         | 🔴 Degraded | Cloudflare 403 challenge on upstream        |
 | Pixiv       | `ajax`               | ~0.4s     | 🟢 High     | Official oEmbed + pixiv.re proxy fallback   |
 | RedNote     | `direct`             | ~1-2s     | 🟢 High     | SSR state + OpenGraph parsing               |
 | Reddit      | `rapidsave`          | ~1-2s     | 🟢 High     | RapidSave video + separate audio stream     |
 | TeraBox     | `sechno`             | ~1-3s     | 🟢 High     | Direct download link + fast m3u8 streaming  |
-| Spotify     | `soundloaders`       | ~3-5s     | 🟢 High     | Direct Soundloaders stream resolver         |
-| Spotify     | `spotmate`           | —         | 🔴 Degraded | Upstream 422 error                          |
-| Spotify     | `spotidown`          | —         | 🔴 Degraded | Session expired upstream                    |
+| Spotify     | `spotisaver`         | ~2s       | 🟢 High     | Fast signature handshake, direct MP3 stream |
+| Spotify     | `spotidown`          | ~2-3s     | 🟢 High     | Token injection, supports albums/tracks      |
+| Spotify     | `spotmate`           | N/A       | 🔴 Degraded | Upstream Cloudflare Turnstile challenge      |
+| Spotify     | `soundloaders`       | N/A       | 🔴 Degraded | Upstream URL error / Turnstile challenge     |
 | Twitter / X | `direct`             | ~0.3-1s   | 🟢 High     | Direct FxTwitter CDN resolver               |
 | Twitter / X | `tweeload`           | ~2-4s     | 🟢 High     | Multi-quality                               |
-| Twitter / X | `tvd`                | ~3-8s     | 🟡 Medium   | Video tweets only                           |
-| Threads     | `threadster`         | —         | 🟡 Degraded | Upstream token rotation                     |
+| Twitter / X | `tvd`                | —         | 🔴 Degraded | Upstream twittervideodownloader blocked by X|
+| Twitter / X | `savetwt`            | —         | 🔴 Degraded | Upstream savetwt.com returns 422 fetch_failed|
+| Threads     | `threadster`         | —         | 🔴 Degraded | Upstream threadster.app blocked by login-wall|
 
 ---
 
