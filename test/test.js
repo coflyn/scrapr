@@ -14,7 +14,7 @@ const SAMPLES = {
   },
   instagram: {
     url: "https://www.instagram.com/p/Dc8-_DptXHe/",
-    methods: ["direct", "indown", "downreels", "snapsave", "snapinsta"],
+    methods: ["direct", "indown", "snapsave", "snapinsta"],
   },
   twitter: {
     url: "https://x.com/Interior/status/463440424141459456",

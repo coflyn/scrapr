@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-10-03
+
+### Fixed
+
+- `bandcamp.bandcampdownloader`: Fixed album and track extraction by adopting upstream CSRF token retrieval (`POST /get/token`) and multipart form payloads.
+- `spotify.soundloaders`: Migrated to Spotimate active engine (`spotimate.app`) with `/api/userverify` handshake and multipart track resolution.
+- `spotify.spotmate`: Migrated to Spotimate active engine with multipart payload resolution and multi-track support.
+- `tiktok.tikdownloader`: Resolved Cloudflare 403 challenge using native HTTP/1.1 transport to extract directly from `tikdownloader.io` without fallback.
+- `twitter.savetwt`: Fixed 422 validation failure by normalizing links to `x.com`, with redirect resolution and direct FxTwitter fallback.
+- `twitter.tvd`: Updated video link parser and added direct FxTwitter fallback.
+- `youtube.ytmp3`: Added query cache-busters, modern fetch headers, and redirect loop handling for progress polling.
+- `threads.threadster`: Added URL normalization and JWT base64 payload decoding for direct stream extraction.
+
+### Removed
+
+- `instagram.downreels`: Removed scraper due to dead upstream host (`api.zoraahub.com`).
+
 ## [1.1.0] - 2026-09-27
 
 ### Added

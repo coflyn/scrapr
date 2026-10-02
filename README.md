@@ -200,7 +200,6 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 |                                                                                                | `youtube.playlist(url)`                     | youtube.com/playlist           |
 | <img src="https://cdn.simpleicons.org/instagram/E4405F" width="16" height="16" /> Instagram    | `instagram.direct(url)`                     | direct embed scrape            |
 |                                                                                                | `instagram.indown(url)`                     | indown.net                     |
-|                                                                                                | `instagram.downreels(url)`                  | downreels.com                  |
 |                                                                                                | `instagram.snapsave(url)`                   | snapsave.app                   |
 |                                                                                                | `instagram.snapinsta(url)`                  | snapinsta.to                   |
 | <img src="https://cdn.simpleicons.org/pinterest/E60023" width="16" height="16" /> Pinterest    | `pinterest.direct(url)`                     | direct page scrape             |
@@ -236,30 +235,29 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 | TikTok      | `snaptik`            | ~0.5-2s   | 🟢 High     | Challenge-response AES, IP-safe             |
 | TikTok      | `ssstik`             | ~1-2s     | 🟢 High     | Axios + Cheerio, lightweight                |
 | TikTok      | `savetik`            | ~5-8s     | 🟢 High     | High quality streams, active                |
-| TikTok      | `tikdownloader`      | —         | 🔴 Broken   | Cloudflare 403 challenge on tikdownloader.io|
+| TikTok      | `tikdownloader`      | ~0.5-1s   | 🟢 High     | Direct tikdownloader.io extraction          |
 | YouTube     | `ytmp3`              | ~6-10s    | 🟢 High     | Init + poll, reliable                       |
 | YouTube     | `playlist`           | ~2-3s     | 🟢 High     | Parsed via ytInitialData lockupViewModel    |
 | Instagram   | `direct`             | ~0.5-1s   | 🟢 High     | Native embed captioned JSON, zero 3rd party |
-| Instagram   | `downreels`          | —         | 🔴 Degraded | Upstream api.zoraahub.com unreachable (523) |
 | Instagram   | `indown`             | ~1-2s     | 🟢 High     | Direct indown.net API, zero Cloudflare block|
 | Instagram   | `snapsave`           | ~0.2-1s   | 🟢 High     | Obfuscated script unpacker & rapidcdn stream|
 | Instagram   | `snapinsta`          | ~10-15s   | 🟢 High     | Playwright stealth + auto-detect system Chrome |
 | Pinterest   | `direct`             | ~0.5-1s   | 🟢 High     | Direct page parsing + pinimg extraction     |
 | Pinterest   | `pindown`            | ~1-2s     | 🟢 High     | AES-256-CBC challenge solver & dynamic seed |
-| Bandcamp    | `bandcampdownloader` | —         | 🔴 Degraded | Cloudflare 403 challenge on upstream        |
+| Bandcamp    | `bandcampdownloader` | ~2-3s     | 🟢 High     | Token CSRF + multipart/form-data payload    |
 | Pixiv       | `ajax`               | ~0.4s     | 🟢 High     | Official oEmbed + pixiv.re proxy fallback   |
 | RedNote     | `direct`             | ~1-2s     | 🟢 High     | SSR state + OpenGraph parsing               |
 | Reddit      | `rapidsave`          | ~1-2s     | 🟢 High     | RapidSave video + separate audio stream     |
 | TeraBox     | `sechno`             | ~1-3s     | 🟢 High     | Direct download link + fast m3u8 streaming  |
 | Spotify     | `spotisaver`         | ~2s       | 🟢 High     | Fast signature handshake, direct MP3 stream |
 | Spotify     | `spotidown`          | ~2-3s     | 🟢 High     | Token injection, supports albums/tracks      |
-| Spotify     | `spotmate`           | N/A       | 🔴 Degraded | Upstream Cloudflare Turnstile challenge      |
-| Spotify     | `soundloaders`       | N/A       | 🔴 Degraded | Upstream URL error / Turnstile challenge     |
+| Spotify     | `spotmate`           | ~4-6s     | 🟢 High     | Spotimate API with userverify handshake     |
+| Spotify     | `soundloaders`       | ~3-5s     | 🟢 High     | Migrated to spotimate.app multipart stream  |
 | Twitter / X | `direct`             | ~0.3-1s   | 🟢 High     | Direct FxTwitter CDN resolver               |
 | Twitter / X | `tweeload`           | ~2-4s     | 🟢 High     | Multi-quality                               |
-| Twitter / X | `tvd`                | —         | 🔴 Degraded | Upstream twittervideodownloader blocked by X|
-| Twitter / X | `savetwt`            | —         | 🔴 Degraded | Upstream savetwt.com returns 422 fetch_failed|
-| Threads     | `threadster`         | —         | 🔴 Degraded | Upstream threadster.app blocked by login-wall|
+| Twitter / X | `tvd`                | ~0.5-2s   | 🟢 High     | TVD with direct FxTwitter fallback          |
+| Twitter / X | `savetwt`            | ~0.5-2s   | 🟢 High     | SaveTWT with x.com normalization & fallback |
+| Threads     | `threadster`         | ~2-4s     | 🟡 Medium   | Threadster API with JWT token decoding & cookie session |
 
 ---
 
