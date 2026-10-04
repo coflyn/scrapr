@@ -15,6 +15,7 @@ const pixiv = require("./lib/pixiv");
 const rednote = require("./lib/rednote");
 const reddit = require("./lib/reddit");
 const terabox = require("./lib/terabox");
+const resolver = require("./lib/resolver");
 
 module.exports = {
   bilibili,
@@ -34,4 +35,5 @@ module.exports = {
   rednote,
   reddit,
   terabox,
+  resolver,
 };
