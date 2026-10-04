@@ -8,6 +8,7 @@ Thank you for your interest in contributing to scrapr. This project provides lig
 2. **Standardized schema**: Every scraper method must return the unified JSON response shape.
 3. **Fallback redundancy**: Add alternative scrapers rather than replacing existing working scrapers. Keep multiple methods per platform where possible.
 4. **No invented facts or metrics**: Document actual working behavior, rate limits, and known caveats.
+5. **Content scope**: Accept general multimedia sources only. Adult/NSFW content, malicious links, or credential bypasses rejected to keep package safe and compliant.
 
 ---
 
