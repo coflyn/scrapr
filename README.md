@@ -2,13 +2,13 @@
 
 # scrapr
 
-**Universal Social Media & Streaming Downloader for Node.js.**  
-_Extract direct MP4, MP3, and image links from TikTok, Instagram, YouTube, Spotify, Twitter/X, and 10+ platforms._
+**Universal Media Extractor & Link Resolver for Node.js.**  
+_Resolve direct media links, unshorten intermediate links, and extract downloadable streams across 20+ platforms._
 
 [![npm version](https://img.shields.io/npm/v/@coflyn/scrapr.svg?style=flat-square)](https://www.npmjs.com/package/@coflyn/scrapr)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![node version](https://img.shields.io/badge/node-%3E%3D%2016.x-61afef.svg?style=flat-square)](https://nodejs.org)
-[![platforms](https://img.shields.io/badge/platforms-17-brightgreen.svg?style=flat-square)](#-api-reference)
+[![platforms](https://img.shields.io/badge/platforms-23-brightgreen.svg?style=flat-square)](#-api-reference)
 [![GitHub stars](https://img.shields.io/github/stars/coflyn/scrapr?style=flat-square)](https://github.com/coflyn/scrapr/stargazers)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
@@ -19,7 +19,7 @@ _Extract direct MP4, MP3, and image links from TikTok, Instagram, YouTube, Spoti
 <br/>
 <br/>
 
-`TikTok` • `Instagram` • `YouTube` • `Spotify` • `Twitter / X` • `Facebook` • `SoundCloud` • `Pinterest` • `Apple Music` • `Bilibili` • `Douyin` • `Bandcamp` • `Threads` • `Pixiv` • `RedNote` • `Reddit` • `TeraBox`
+`TikTok` • `Instagram` • `YouTube` • `Spotify` • `Twitter / X` • `Facebook` • `SoundCloud` • `Pinterest` • `Apple Music` • `Bilibili` • `Douyin` • `Bandcamp` • `Threads` • `Pixiv` • `RedNote` • `Reddit` • `TeraBox` • `MediaFire` • `Sfile` • `Safelinku` • `Sub2Unlock` • `Rekonise` • `Unshorten`
 
 <br/>
 
@@ -31,7 +31,7 @@ _Extract direct MP4, MP3, and image links from TikTok, Instagram, YouTube, Spoti
 
 ---
 
-> **What is scrapr?** A media link extractor. Give it a social media or streaming URL and it returns direct downloadable links (MP4, MP3, images) with metadata. Not a general web crawler or HTML scraping toolkit.
+> **What is scrapr?** A lightweight media extractor and link resolver. Pass a social media, streaming, or shortlink URL and get direct downloadable streams (MP4, MP3, files) or destination URLs with structured metadata. Not a heavy web crawler or generic HTML scraping framework.
 
 ---
 
@@ -88,6 +88,32 @@ const { bandcamp } = require("@coflyn/scrapr");
 })();
 ```
 
+### Link Resolver (MediaFire, Sfile, Rekonise, Safelinku, Sub2Unlock, Unshorten)
+
+```javascript
+const { resolver } = require("@coflyn/scrapr");
+
+(async () => {
+  // Direct file host resolver
+  const mf = await resolver.mediafire("https://www.mediafire.com/file/w4b1fjoijyug9qz/nix.py");
+  console.log("MediaFire direct URL:", mf.result.url);
+
+  // Social unlock resolvers (auto-resolves target MediaFire/Sfile link by default)
+  const s2u = await resolver.sub2unlock("https://sub2unlock.com/Ucdex");
+  console.log("Sub2Unlock direct file:", s2u.result.url);
+
+  const rek = await resolver.rekonise("https://rekonise.com/craniums-free-midi-kit-mlpp6");
+  console.log("Rekonise unlocked URL:", rek.result.url);
+
+  // Shortlink & gateway resolvers
+  const sfl = await resolver.safelinku("https://sfl.gl/eMeqC");
+  console.log("Safelinku direct file:", sfl.result.url);
+
+  const raw = await resolver.unshorten("https://dub.sh/github");
+  console.log("Unshortened URL:", raw.result.url);
+})();
+```
+
 ### Fallback chain
 
 ```javascript
@@ -111,14 +137,14 @@ async function resolveTikTok(url) {
 
 ```js
 const scrapr = require("@coflyn/scrapr");
-const { tiktok, spotify, twitter } = require("@coflyn/scrapr");
+const { tiktok, spotify, resolver } = require("@coflyn/scrapr");
 ```
 
 ### ESM
 
 ```js
 import scrapr from "@coflyn/scrapr";
-import { tiktok, spotify } from "@coflyn/scrapr";
+import { tiktok, spotify, resolver } = require("@coflyn/scrapr");
 ```
 
 ---
@@ -218,6 +244,12 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 | <img src="https://cdn.simpleicons.org/threads/000000" width="16" height="16" /> Threads        | `threads.threadster(url)`                   | threadster.app                 |
 | <img src="https://cdn.simpleicons.org/reddit/FF4500" width="16" height="16" /> Reddit          | `reddit.rapidsave(url)`                     | rapidsave.com                  |
 | <img src="https://cdn.simpleicons.org/box/0061D5" width="16" height="16" /> TeraBox           | `terabox.sechno(url)`                       | sechno.com                     |
+| Resolver (File Host & Shortlink)                                                               | `resolver.mediafire(url)`                   | mediafire.com                  |
+|                                                                                                | `resolver.sfile(url)`                       | sfile.co / sfile.mobi          |
+|                                                                                                | `resolver.sub2unlock(url, options)`         | sub2unlock.com / sub4unlock    |
+|                                                                                                | `resolver.rekonise(url, options)`           | rekonise.com                   |
+|                                                                                                | `resolver.safelinku(url, options)`          | safelinku.com / sfl.gl         |
+|                                                                                                | `resolver.unshorten(url, options)`          | universal shortlinks (dub.sh, bit.ly, etc.) |
 
 ---
 
@@ -249,6 +281,12 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 | RedNote     | `direct`             | ~1-2s     | 🟢 High     | SSR state + OpenGraph parsing               |
 | Reddit      | `rapidsave`          | ~1-2s     | 🟢 High     | RapidSave video + separate audio stream     |
 | TeraBox     | `sechno`             | ~1-3s     | 🟢 High     | Direct download link + fast m3u8 streaming  |
+| Resolver    | `mediafire`          | ~0.5-1.0s | 🟢 High     | Direct MediaFire button & CDN link resolver |
+| Resolver    | `sfile`              | ~0.4-0.8s | 🟢 High     | Direct Sfile session & CDN resolver         |
+| Resolver    | `sub2unlock`         | ~0.8-1.5s | 🟢 High     | Next.js state extraction + file auto-resolve|
+| Resolver    | `rekonise`           | ~11-13s   | 🟢 High     | Action handshake + server timer compliance  |
+| Resolver    | `safelinku`          | ~2.5-4s   | 🟢 High     | Gateway API handshake & file auto-resolve   |
+| Resolver    | `unshorten`          | ~0.5-1.5s | 🟢 High     | HTTP redirection chain & file auto-resolve  |
 | Spotify     | `spotisaver`         | ~2s       | 🟢 High     | Fast signature handshake, direct MP3 stream |
 | Spotify     | `spotidown`          | ~2-3s     | 🟢 High     | Token injection, supports albums/tracks      |
 | Spotify     | `spotmate`           | ~4-6s     | 🟢 High     | Spotimate API with userverify handshake     |

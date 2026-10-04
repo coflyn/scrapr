@@ -72,6 +72,22 @@ const SAMPLES = {
     url: "https://www.terabox.com/wap/share/filelist?surl=rIMSgmDoO4oZKpgQhsoeig",
     methods: ["sechno"],
   },
+  resolver: {
+    url: "https://sfile.co/IfoNMF2mJlI",
+    safelinkuUrl: "https://sfl.gl/eMeqC",
+    mediafireUrl: "https://www.mediafire.com/file/w4b1fjoijyug9qz/nix.py",
+    sub2unlockUrl: "https://sub2unlock.com/Ucdex",
+    rekoniseUrl: "https://rekonise.com/craniums-free-midi-kit-mlpp6",
+    unshortenUrl: "https://dub.sh/github",
+    methods: [
+      "sfile",
+      "safelinku",
+      "mediafire",
+      "sub2unlock",
+      "rekonise",
+      "unshorten",
+    ],
+  },
 };
 
 function validateSchema(payload) {
@@ -181,13 +197,18 @@ async function run() {
     const start = Date.now();
     let timer;
     try {
+      const timeoutLimit =
+        method === "snapinsta" || method === "rekonise" ? 25000 : 15000;
       const timeoutPromise = new Promise((_, reject) => {
-        timer = setTimeout(() => reject(new Error("Timeout (15s exceeded)")), 15000);
+        timer = setTimeout(
+          () => reject(new Error(`Timeout (${timeoutLimit / 1000}s exceeded)`)),
+          timeoutLimit,
+        );
       });
       const testUrl =
         method === "playlist" && config.playlistUrl
           ? config.playlistUrl
-          : config.url;
+          : config[method + "Url"] || config.url;
       const res = await Promise.race([fn(testUrl), timeoutPromise]);
       clearTimeout(timer);
       validateSchema(res);

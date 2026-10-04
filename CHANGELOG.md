@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-10-04
+
+### Added
+
+- `resolver.mediafire`: Direct MediaFire file resolver extracting filename, file size, and direct CDN download URL.
+- `resolver.sfile`: Direct Sfile (`sfile.co` / `sfile.mobi`) file resolver with session handshake and CDN download stream extraction.
+- `resolver.sub2unlock`: Sub2Unlock destination extractor parsing Next.js page state without requiring social media tasks, with default auto-resolving to direct file hosts.
+- `resolver.rekonise`: Rekonise social unlock resolver with automated action handshake and destination extraction.
+- `resolver.safelinku`: Gateway resolver for Safelinku, Semawur, and AdLinkFly networks (`sfl.gl`, `safelinku.com`, `semawur.com`, `app.khaddavi.net`) with default auto-resolving to direct file hosts.
+- `resolver.unshorten`: Universal redirection resolver tracing HTTP 301/302 location chains with auto-resolving for destination file hosts.
+- `resolver`: Added new module namespace in `scrapr` for file host resolving and link unwrapping.
+
 ## [1.1.1] - 2026-10-03
 
 ### Fixed
