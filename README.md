@@ -80,9 +80,14 @@ const { tiktok, twitter } = require("@coflyn/scrapr");
 const { bandcamp } = require("@coflyn/scrapr");
 
 (async () => {
+  // Direct track/album scraping (HTTP first)
+  const direct = await bandcamp.direct("https://tycho.bandcamp.com/track/awake");
+  console.log("Direct stream:", direct.result.downloads[0].url);
+
+  // Downloader method with direct fallback
   const res = await bandcamp.bandcampdownloader(
-    "https://bandcamp.com/album/example",
-    { quality: "320" }, // "128" | "320"
+    "https://tycho.bandcamp.com/album/awake",
+    { quality: "320" },
   );
   console.log(`${res.result.trackCount} tracks found`);
 })();
@@ -99,8 +104,8 @@ const { resolver } = require("@coflyn/scrapr");
   console.log("MediaFire direct URL:", mf.result.url);
 
   // Social unlock resolvers (auto-resolves target MediaFire/Sfile link by default)
-  const s2u = await resolver.sub2unlock("https://sub2unlock.com/Ucdex");
-  console.log("Sub2Unlock direct file:", s2u.result.url);
+  const s2u = await resolver.sub2unlock("https://sub2unlock.io/example");
+  console.log("Sub2Unlock destination URL:", s2u.result.url);
 
   const rek = await resolver.rekonise("https://rekonise.com/craniums-free-midi-kit-mlpp6");
   console.log("Rekonise unlocked URL:", rek.result.url);
@@ -109,7 +114,7 @@ const { resolver } = require("@coflyn/scrapr");
   const sfl = await resolver.safelinku("https://sfl.gl/eMeqC");
   console.log("Safelinku direct file:", sfl.result.url);
 
-  const raw = await resolver.unshorten("https://dub.sh/github");
+  const raw = await resolver.unshorten("https://aka.ms/vscode");
   console.log("Unshortened URL:", raw.result.url);
 })();
 ```
@@ -230,7 +235,8 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 |                                                                                                | `instagram.snapinsta(url)`                  | snapinsta.to                   |
 | <img src="https://cdn.simpleicons.org/pinterest/E60023" width="16" height="16" /> Pinterest    | `pinterest.direct(url)`                     | direct page scrape             |
 |                                                                                                | `pinterest.pindown(url)`                    | pindown.io                     |
-| <img src="https://cdn.simpleicons.org/bandcamp/1DA1F2" width="16" height="16" /> Bandcamp      | `bandcamp.bandcampdownloader(url, options)` | bandcampdownloader.app         |
+| <img src="https://cdn.simpleicons.org/bandcamp/1DA1F2" width="16" height="16" /> Bandcamp      | `bandcamp.direct(url)`                      | direct page scrape             |
+|                                                                                                | `bandcamp.bandcampdownloader(url, options)` | bandcampdownloader.app         |
 | <img src="https://cdn.simpleicons.org/pixiv/0096FA" width="16" height="16" /> Pixiv            | `pixiv.ajax(url)`                           | pixiv.net (pixiv.re proxy)     |
 | <img src="https://cdn.simpleicons.org/xiaohongshu/FF2442" width="16" height="16" /> RedNote    | `rednote.direct(url)`                       | xiaohongshu.com / rednote      |
 | <img src="https://cdn.simpleicons.org/spotify/1ED760" width="16" height="16" /> Spotify        | `spotify.spotisaver(url)`                   | spotisaver.net                 |
@@ -259,7 +265,7 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 | ----------- | -------------------- | --------- | ----------- | ------------------------------------------- |
 | Apple Music | `aplmate`            | ~3-5s     | ⚪ Medium   | Turnstile bypass, sometimes noise           |
 | Bilibili    | `direct`             | ~0.3-0.5s | 🟢 High     | Direct Bilibili view/playurl API            |
-| Douyin      | `direct`             | ~1-2s     | 🟢 High     | Direct iesdouyin SSR + ttwid handshake      |
+| Douyin      | `direct`             | ~1-2s     | 🟢 High     | Direct iesdouyin SSR + ttwid handshake + WAF solver |
 | Facebook    | `snapsave`           | ~4-8s     | 🟢 High     | Packed JS unpacker, dual stream             |
 | Facebook    | `fdown`              | ~8-15s    | 🟡 Medium   | Puppeteer + Chrome, Cloudflare bypass       |
 | SoundCloud  | `klickaud`           | ~4-6s     | 🟢 High     | Dynamic CSRF + SSE capability grant         |
@@ -276,14 +282,15 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 | Instagram   | `snapinsta`          | ~10-15s   | 🟢 High     | Playwright stealth + auto-detect system Chrome |
 | Pinterest   | `direct`             | ~0.5-1s   | 🟢 High     | Direct page parsing + pinimg extraction     |
 | Pinterest   | `pindown`            | ~1-2s     | 🟢 High     | AES-256-CBC challenge solver & dynamic seed |
-| Bandcamp    | `bandcampdownloader` | ~2-3s     | 🟢 High     | Token CSRF + multipart/form-data payload    |
+| Bandcamp    | `direct`             | ~0.5-1s   | 🟢 High     | Direct Bandcamp tralbum data & stream extraction |
+| Bandcamp    | `bandcampdownloader` | ~1-2s     | 🟢 High     | Token CSRF with direct fallback             |
 | Pixiv       | `ajax`               | ~0.4s     | 🟢 High     | Official oEmbed + pixiv.re proxy fallback   |
 | RedNote     | `direct`             | ~1-2s     | 🟢 High     | SSR state + OpenGraph parsing               |
 | Reddit      | `rapidsave`          | ~1-2s     | 🟢 High     | RapidSave video + separate audio stream     |
 | TeraBox     | `sechno`             | ~1-3s     | 🟢 High     | Direct download link + fast m3u8 streaming  |
 | Resolver    | `mediafire`          | ~0.5-1.0s | 🟢 High     | Direct MediaFire button & CDN link resolver |
 | Resolver    | `sfile`              | ~0.4-0.8s | 🟢 High     | Direct Sfile session & CDN resolver         |
-| Resolver    | `sub2unlock`         | ~0.8-1.5s | 🟢 High     | Next.js state extraction + file auto-resolve|
+| Resolver    | `sub2unlock`         | ~0.8-1.5s | 🟡 Medium   | Supports sub2unlock.io & sub2unlock.com     |
 | Resolver    | `rekonise`           | ~11-13s   | 🟢 High     | Action handshake + server timer compliance  |
 | Resolver    | `safelinku`          | ~2.5-4s   | 🟢 High     | Gateway API handshake & file auto-resolve   |
 | Resolver    | `unshorten`          | ~0.5-1.5s | 🟢 High     | HTTP redirection chain & file auto-resolve  |

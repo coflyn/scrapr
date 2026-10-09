@@ -1,6 +1,6 @@
 {
   "name": "@coflyn/scrapr",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Universal media extractor, link resolver, and URL unshortener for Node.js (TikTok, Instagram, YouTube, Spotify, Sfile, Safelinku, and more).",
   "main": "index.js",
   "files": [

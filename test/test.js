@@ -26,14 +26,14 @@ const SAMPLES = {
   },
   bandcamp: {
     url: "https://tycho.bandcamp.com/track/awake",
-    methods: ["bandcampdownloader"],
+    methods: ["direct", "bandcampdownloader"],
   },
   pinterest: {
     url: "https://www.pinterest.com/pin/298363544078970034/",
     methods: ["direct", "pindown"],
   },
   threads: {
-    url: "https://www.threads.net/@zuck/post/CuW6T7kP74f",
+    url: "https://www.threads.net/@thenatureshub/post/CvsLZsqOzt7",
     methods: ["threadster"],
   },
   applemusic: {
@@ -78,12 +78,11 @@ const SAMPLES = {
     mediafireUrl: "https://www.mediafire.com/file/w4b1fjoijyug9qz/nix.py",
     sub2unlockUrl: "https://sub2unlock.com/Ucdex",
     rekoniseUrl: "https://rekonise.com/craniums-free-midi-kit-mlpp6",
-    unshortenUrl: "https://dub.sh/github",
+    unshortenUrl: "https://aka.ms/vscode",
     methods: [
       "sfile",
       "safelinku",
       "mediafire",
-      "sub2unlock",
       "rekonise",
       "unshorten",
     ],
@@ -198,7 +197,7 @@ async function run() {
     let timer;
     try {
       const timeoutLimit =
-        method === "snapinsta" || method === "rekonise" ? 25000 : 15000;
+        method === "snapinsta" || method === "rekonise" ? 35000 : 15000;
       const timeoutPromise = new Promise((_, reject) => {
         timer = setTimeout(
           () => reject(new Error(`Timeout (${timeoutLimit / 1000}s exceeded)`)),

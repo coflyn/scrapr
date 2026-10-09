@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2026-10-09
+
+### Added
+
+- `bandcamp.direct`: Direct HTTP scraper for Bandcamp tracks and albums extracting streaming MP3s (128kbps), HD cover art, and track metadata without third-party services.
+
+### Fixed
+
+- `bandcamp.bandcampdownloader`: Added automatic fallback to `bandcamp.direct` when upstream service fails due to SSL certificate errors or network blocks.
+- `douyin.direct`: Fixed Douyin video extraction by implementing automated `ttwid` token registration via ByteDance union API and an internal SHA-256 Proof-of-Work solver for Douyin WAF JS challenge (`_wafchallengeid`).
+- `resolver.sub2unlock`: Added fallback from `sub2unlock.com` to `sub2unlock.io` to handle domain migrations and DNS resolution failures.
+- `resolver.unshorten`: Updated test sample URL to enterprise shortlinks (`aka.ms`) to avoid bot challenge rate limits.
+- `threads.threadster`: Updated test sample URL to active post with video media.
+
 ## [1.2.0] - 2026-10-04
 
 ### Added
