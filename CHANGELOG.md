@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-10-15
+
+### Added
+
+- `resolver.pixeldrain`: Pixeldrain file, filesystem directory, and album resolver via REST API (`/api/file/{id}/info` and `/api/filesystem/{id}?stat`) extracting filename, human-readable size, and direct download links.
+- `resolver.catbox`: Catbox.moe and Litterbox file and collection resolver (`catbox.moe/c/{id}`, `files.catbox.moe`, `litter.catbox.moe`) with HTTP Range/HEAD probing for metadata.
+- `resolver.gdrive`: Google Drive and Google Docs file resolver extracting file ID, document title, direct CDN download link, and export URLs.
+- `resolver.krakenfiles`: Krakenfiles metadata and download page resolver extracting file name, file size, and download endpoints.
+- `resolver.doodstream`: Doodstream video stream resolver with embed pass extraction and graceful Cloudflare challenge detection.
+
+### Fixed
+
+- `spotify.spotmate`: Fixed `ReferenceError: trackInfo is not defined` bug during track list iteration.
+- `test/test.js`: Added `sub2unlock` to test suite and increased timeout limits for slow upstreams (`klickaud`, `ytmp3gg`, `fdown`).
+
 ## [1.2.1] - 2026-10-09
 
 ### Added

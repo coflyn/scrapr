@@ -79,12 +79,24 @@ const SAMPLES = {
     sub2unlockUrl: "https://sub2unlock.com/Ucdex",
     rekoniseUrl: "https://rekonise.com/craniums-free-midi-kit-mlpp6",
     unshortenUrl: "https://aka.ms/vscode",
+    pixeldrainUrl: "https://pixeldrain.com/d/8xz8hcYJ",
+    catboxUrl: "https://files.catbox.moe/8ih3y7.png",
+    krakenfilesUrl: "https://krakenfiles.com/view/HYTyBNtl9u/file.html",
+    doodstreamUrl: "https://dood.to/e/test",
+    gdriveUrl:
+      "https://drive.google.com/file/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/view",
     methods: [
       "sfile",
       "safelinku",
       "mediafire",
+      "sub2unlock",
       "rekonise",
       "unshorten",
+      "pixeldrain",
+      "catbox",
+      "krakenfiles",
+      "doodstream",
+      "gdrive",
     ],
   },
 };
@@ -197,7 +209,11 @@ async function run() {
     let timer;
     try {
       const timeoutLimit =
-        method === "snapinsta" || method === "rekonise" ? 35000 : 15000;
+        ["snapinsta", "rekonise", "klickaud", "ytmp3gg", "fdown"].includes(
+          method,
+        )
+          ? 35000
+          : 20000;
       const timeoutPromise = new Promise((_, reject) => {
         timer = setTimeout(
           () => reject(new Error(`Timeout (${timeoutLimit / 1000}s exceeded)`)),

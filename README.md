@@ -8,7 +8,7 @@ _Resolve direct media links, unshorten intermediate links, and extract downloada
 [![npm version](https://img.shields.io/npm/v/@coflyn/scrapr.svg?style=flat-square)](https://www.npmjs.com/package/@coflyn/scrapr)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![node version](https://img.shields.io/badge/node-%3E%3D%2016.x-61afef.svg?style=flat-square)](https://nodejs.org)
-[![platforms](https://img.shields.io/badge/platforms-23-brightgreen.svg?style=flat-square)](#-api-reference)
+[![platforms](https://img.shields.io/badge/platforms-28-brightgreen.svg?style=flat-square)](#-api-reference)
 [![GitHub stars](https://img.shields.io/github/stars/coflyn/scrapr?style=flat-square)](https://github.com/coflyn/scrapr/stargazers)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
@@ -19,7 +19,7 @@ _Resolve direct media links, unshorten intermediate links, and extract downloada
 <br/>
 <br/>
 
-`TikTok` • `Instagram` • `YouTube` • `Spotify` • `Twitter / X` • `Facebook` • `SoundCloud` • `Pinterest` • `Apple Music` • `Bilibili` • `Douyin` • `Bandcamp` • `Threads` • `Pixiv` • `RedNote` • `Reddit` • `TeraBox` • `MediaFire` • `Sfile` • `Safelinku` • `Sub2Unlock` • `Rekonise` • `Unshorten`
+`TikTok` • `Instagram` • `YouTube` • `Spotify` • `Twitter / X` • `Facebook` • `SoundCloud` • `Pinterest` • `Apple Music` • `Bilibili` • `Douyin` • `Bandcamp` • `Threads` • `Pixiv` • `RedNote` • `Reddit` • `TeraBox` • `MediaFire` • `Sfile` • `Safelinku` • `Sub2Unlock` • `Rekonise` • `Unshorten` • `Pixeldrain` • `Catbox` • `Google Drive` • `Krakenfiles` • `Doodstream`
 
 <br/>
 
@@ -93,15 +93,24 @@ const { bandcamp } = require("@coflyn/scrapr");
 })();
 ```
 
-### Link Resolver (MediaFire, Sfile, Rekonise, Safelinku, Sub2Unlock, Unshorten)
+### Link Resolver (MediaFire, Sfile, Pixeldrain, Catbox, GDrive, Krakenfiles, etc.)
 
 ```javascript
 const { resolver } = require("@coflyn/scrapr");
 
 (async () => {
-  // Direct file host resolver
+  // Direct file host resolvers
   const mf = await resolver.mediafire("https://www.mediafire.com/file/w4b1fjoijyug9qz/nix.py");
   console.log("MediaFire direct URL:", mf.result.url);
+
+  const pd = await resolver.pixeldrain("https://pixeldrain.com/d/8xz8hcYJ");
+  console.log("Pixeldrain direct URL:", pd.result.url);
+
+  const cb = await resolver.catbox("https://files.catbox.moe/8ih3y7.png");
+  console.log("Catbox direct URL:", cb.result.url);
+
+  const gd = await resolver.gdrive("https://drive.google.com/file/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/view");
+  console.log("Google Drive direct CDN:", gd.result.url);
 
   // Social unlock resolvers (auto-resolves target MediaFire/Sfile link by default)
   const s2u = await resolver.sub2unlock("https://sub2unlock.io/example");
@@ -256,6 +265,11 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 |                                                                                                | `resolver.rekonise(url, options)`           | rekonise.com                   |
 |                                                                                                | `resolver.safelinku(url, options)`          | safelinku.com / sfl.gl         |
 |                                                                                                | `resolver.unshorten(url, options)`          | universal shortlinks (dub.sh, bit.ly, etc.) |
+|                                                                                                | `resolver.pixeldrain(url)`                  | pixeldrain.com                 |
+|                                                                                                | `resolver.catbox(url)`                      | catbox.moe / litter.catbox.moe |
+|                                                                                                | `resolver.gdrive(url)`                      | drive.google.com               |
+|                                                                                                | `resolver.krakenfiles(url)`                 | krakenfiles.com                |
+|                                                                                                | `resolver.doodstream(url)`                  | dood.to / ds2play.com          |
 
 ---
 
@@ -294,6 +308,11 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 | Resolver    | `rekonise`           | ~11-13s   | 🟢 High     | Action handshake + server timer compliance  |
 | Resolver    | `safelinku`          | ~2.5-4s   | 🟢 High     | Gateway API handshake & file auto-resolve   |
 | Resolver    | `unshorten`          | ~0.5-1.5s | 🟢 High     | HTTP redirection chain & file auto-resolve  |
+| Resolver    | `pixeldrain`         | ~0.3-0.8s | 🟢 High     | REST API info/stat & direct link extraction |
+| Resolver    | `catbox`             | ~0.5-1.2s | 🟢 High     | Direct file & collection scraping           |
+| Resolver    | `gdrive`             | ~0.5-1.0s | 🟢 High     | File ID extraction, title & CDN download link |
+| Resolver    | `krakenfiles`        | ~1.0-1.5s | 🟢 High     | Page metadata, file size & download link    |
+| Resolver    | `doodstream`         | ~0.8-1.5s | 🟡 Medium   | Pass token extraction (subject to WAF)      |
 | Spotify     | `spotisaver`         | ~2s       | 🟢 High     | Fast signature handshake, direct MP3 stream |
 | Spotify     | `spotidown`          | ~2-3s     | 🟢 High     | Token injection, supports albums/tracks      |
 | Spotify     | `spotmate`           | ~4-6s     | 🟢 High     | Spotimate API with userverify handshake     |
