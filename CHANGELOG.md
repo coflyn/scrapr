@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2026-10-19
+
+### Added
+
+- `tiktok`: Added support for `tt.site` short URLs across all scrapers (`snaptik`, `tiktokio`, `ssstik`, `savetik`, `tikdownloader`) with automated domain normalization to `vt.tiktok.com`.
+
+### Fixed
+
+- `facebook.snapsave`: Added explicit 5s request timeouts on axios requests to prevent hanging when `snapsave.app` is unresponsive.
+- `instagram.snapsave`: Lowered request timeout to 5s to avoid long blocking delays when upstream is down.
+- `terabox.sechno`: Increased request timeout to 30s to accommodate slower upstream responses under heavy load.
+- `test/test.js`: Added `sechno` and `snapsave` to extended 35s timeout pool to prevent test runner timeout race conditions.
+
 ## [1.3.0] - 2026-10-15
 
 ### Added

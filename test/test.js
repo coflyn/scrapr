@@ -209,9 +209,15 @@ async function run() {
     let timer;
     try {
       const timeoutLimit =
-        ["snapinsta", "rekonise", "klickaud", "ytmp3gg", "fdown"].includes(
-          method,
-        )
+        [
+          "snapinsta",
+          "rekonise",
+          "klickaud",
+          "ytmp3gg",
+          "fdown",
+          "snapsave",
+          "sechno",
+        ].includes(method)
           ? 35000
           : 20000;
       const timeoutPromise = new Promise((_, reject) => {
