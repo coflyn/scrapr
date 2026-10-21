@@ -33,7 +33,10 @@
     "social-media"
   ],
   "scripts": {
-    "test": "node test/test.js"
+    "test": "node test/test.js",
+    "bundle": "esbuild index.js --bundle --platform=node --format=cjs --minify --outfile=bundle.cjs",
+    "preversion": "npm run bundle",
+    "prepare": "npm run bundle"
   },
   "license": "MIT",
   "author": "coflyn",
