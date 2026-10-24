@@ -8,7 +8,7 @@ _Resolve direct media links, unshorten intermediate links, and extract downloada
 [![npm version](https://img.shields.io/npm/v/@coflyn/scrapr.svg?style=flat-square)](https://www.npmjs.com/package/@coflyn/scrapr)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![node version](https://img.shields.io/badge/node-%3E%3D%2016.x-61afef.svg?style=flat-square)](https://nodejs.org)
-[![platforms](https://img.shields.io/badge/platforms-28-brightgreen.svg?style=flat-square)](#-api-reference)
+[![platforms](https://img.shields.io/badge/platforms-40%2B-brightgreen.svg?style=flat-square)](#-api-reference)
 [![GitHub stars](https://img.shields.io/github/stars/coflyn/scrapr?style=flat-square)](https://github.com/coflyn/scrapr/stargazers)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
@@ -19,7 +19,7 @@ _Resolve direct media links, unshorten intermediate links, and extract downloada
 <br/>
 <br/>
 
-`TikTok` • `Instagram` • `YouTube` • `Spotify` • `Twitter / X` • `Facebook` • `SoundCloud` • `Pinterest` • `Apple Music` • `Bilibili` • `Douyin` • `Bandcamp` • `Threads` • `Pixiv` • `RedNote` • `Reddit` • `TeraBox` • `MediaFire` • `Sfile` • `Safelinku` • `Sub2Unlock` • `Rekonise` • `Unshorten` • `Pixeldrain` • `Catbox` • `Google Drive` • `Krakenfiles` • `Doodstream`
+`TikTok` • `Instagram` • `YouTube` • `Spotify` • `Twitter / X` • `Facebook` • `SoundCloud` • `Pinterest` • `Apple Music` • `Bilibili` • `Douyin` • `Bandcamp` • `Threads` • `Pixiv` • `RedNote` • `Reddit` • `TeraBox` • `MediaFire` • `Sfile` • `Safelinku` • `Sub2Unlock` • `Rekonise` • `Unshorten` • `Pixeldrain` • `Catbox` • `Google Drive` • `Krakenfiles` • `Doodstream` • `Otakudesu` • `Gogoanime` • `Nimegami` • `AnimeTosho` • `Komikindo` • `Komiku` • `Asura Scans` • `Kiryuu` • `Komikcast` • `MangaDex`
 
 <br/>
 
@@ -134,6 +134,46 @@ const { resolver } = require("@coflyn/scrapr");
 
   const raw = await resolver.unshorten("https://aka.ms/vscode");
   console.log("Unshortened URL:", raw.result.url);
+})();
+```
+
+### Anime (Otakudesu, Gogoanime)
+
+```javascript
+const { anime } = require("@coflyn/scrapr");
+
+(async () => {
+  // Search anime
+  const searchRes = await anime.gogoanime.search("Solo Leveling");
+  console.log("Found anime:", searchRes.result[0].title);
+
+  // List episodes
+  const epRes = await anime.gogoanime.getEpisodes(searchRes.result[0].url);
+  console.log(`Found ${epRes.result.length} episodes`);
+
+  // Scrape video streams / web player
+  const streamRes = await anime.gogoanime.scrape(epRes.result[0].url);
+  console.log("Stream links:", streamRes.result.downloads);
+})();
+```
+
+### Comic / Manga (Komikindo, Komiku, Asura Scans)
+
+```javascript
+const { comic } = require("@coflyn/scrapr");
+
+(async () => {
+  // Search comic
+  const searchRes = await comic.komiku.search("Solo Leveling");
+  console.log("Found comic:", searchRes.result[0].title);
+
+  // List chapters
+  const chRes = await comic.komiku.getChapters(searchRes.result[0].url);
+  console.log(`Found ${chRes.result.length} chapters`);
+
+  // Scrape chapter page images
+  const chapter = await comic.komiku.scrape(chRes.result[0].url);
+  console.log(`Found ${chapter.result.downloads.length} chapter images`);
 })();
 ```
 
@@ -279,6 +319,29 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 |                                                                                                | `resolver.gdrive(url)`                      | drive.google.com                            |
 |                                                                                                | `resolver.krakenfiles(url)`                 | krakenfiles.com                             |
 |                                                                                                | `resolver.doodstream(url)`                  | dood.to / ds2play.com                       |
+| Anime (Otakudesu, Gogoanime, etc.)                                                             | `anime.otakudesu.scrape(url)`               | otakudesu.best                              |
+|                                                                                                | `anime.otakudesu.search(query)`             | otakudesu.best                              |
+|                                                                                                | `anime.otakudesu.getEpisodes(animeUrl)`     | otakudesu.best                              |
+|                                                                                                | `anime.gogoanime.scrape(url)`               | gogoanime / megaplay.buzz                   |
+|                                                                                                | `anime.gogoanime.search(query)`             | gogoanime                                   |
+|                                                                                                | `anime.gogoanime.getEpisodes(animeUrl)`     | gogoanime                                   |
+|                                                                                                | `anime.nimegami.scrape(url)`                | nimegami.id                                 |
+|                                                                                                | `anime.animetosho.scrape(url)`              | animetosho.org                              |
+| Comic / Manga (Komikindo, Komiku, etc.)                                                        | `comic.komikindo.scrape(url)`               | komikindo.ch                                |
+|                                                                                                | `comic.komikindo.search(query)`             | komikindo.ch                                |
+|                                                                                                | `comic.komikindo.getChapters(comicUrl)`     | komikindo.ch                                |
+|                                                                                                | `comic.komiku.scrape(url)`                  | komiku.org                                  |
+|                                                                                                | `comic.komiku.search(query)`                | api.komiku.org                              |
+|                                                                                                | `comic.komiku.getChapters(comicUrl)`        | komiku.org                                  |
+|                                                                                                | `comic.asurascans.scrape(url)`              | asuracomic.net                              |
+|                                                                                                | `comic.asurascans.search(query)`            | asuracomic.net                              |
+|                                                                                                | `comic.asurascans.getChapters(comicUrl)`    | asuracomic.net                              |
+|                                                                                                | `comic.kiryuu.scrape(url)`                  | kiryuu.org                                  |
+|                                                                                                | `comic.komikcast.scrape(url)`               | komikcast.bz                                |
+|                                                                                                | `comic.mangadex.scrape(url)`                | mangadex.org                                |
+|                                                                                                | `comic.bacakomik.scrape(url)`               | bacakomik.net                               |
+|                                                                                                | `comic.manhwaindo.scrape(url)`              | manhwaindo.id                               |
+|                                                                                                | `comic.mangabats.scrape(url)`               | mangabats.com                               |
 
 ---
 
@@ -298,6 +361,7 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 | TikTok      | `savetik`            | ~5-8s     | 🟢 High     | High quality streams, active (supports `tt.site`)       |
 | TikTok      | `tikdownloader`      | ~0.5-1s   | 🟢 High     | Direct extraction (supports `tt.site`)                  |
 | YouTube     | `ytmp3`              | ~6-10s    | 🟢 High     | Init + poll, reliable                                   |
+| YouTube     | `ytmp3gg`            | ~1-3s     | 🟢 High     | Fast direct API scraper                                 |
 | YouTube     | `playlist`           | ~2-3s     | 🟢 High     | Parsed via ytInitialData lockupViewModel                |
 | Instagram   | `direct`             | ~0.5-1s   | 🟢 High     | Native embed captioned JSON, zero 3rd party             |
 | Instagram   | `indown`             | ~1-2s     | 🟢 High     | Direct indown.net API, zero Cloudflare block            |
@@ -331,6 +395,19 @@ For `youtube.playlist` and `bandcamp.bandcampdownloader`:
 | Twitter / X | `tvd`                | ~0.5-2s   | 🟢 High     | TVD with direct FxTwitter fallback                      |
 | Twitter / X | `savetwt`            | ~0.5-2s   | 🟢 High     | SaveTWT with x.com normalization & fallback             |
 | Threads     | `threadster`         | ~2-4s     | 🟡 Medium   | Threadster API with JWT token decoding & cookie session |
+| Anime       | `otakudesu`          | ~0.8-1.5s | 🟢 High     | Batch & individual episode mirrors resolver             |
+| Anime       | `gogoanime`          | ~1.5-2.5s | 🟢 High     | Pure Node crypto AES-256 decryptor + Web Player stream  |
+| Anime       | `nimegami`           | ~0.5-1.2s | 🟢 High     | Multi-res stream & mirror extraction                    |
+| Anime       | `animetosho`         | ~0.5-1.0s | 🟢 High     | Torrent, magnet URI, & DDL mirror links                 |
+| Comic       | `komikindo`          | ~0.2-0.5s | 🟢 High     | Fast chapter image parsing with color badge handling    |
+| Comic       | `komiku`             | ~0.3-0.7s | 🟢 High     | Official REST API search + chapter image crawler        |
+| Comic       | `asurascans`         | ~0.2-0.5s | 🟢 High     | Direct CDN chapter image extractor                      |
+| Comic       | `kiryuu`             | ~0.3-0.8s | 🟢 High     | Direct chapter image extractor                          |
+| Comic       | `komikcast`          | ~0.4-0.9s | 🟢 High     | Multi-mirror CDN reader                                 |
+| Comic       | `mangadex`           | ~0.3-0.6s | 🟢 High     | Official MangaDex@Home CDN API resolver                 |
+| Comic       | `bacakomik`          | ~0.4-0.8s | 🟢 High     | Chapter image crawler                                   |
+| Comic       | `manhwaindo`         | ~0.3-0.7s | 🟢 High     | Chapter image crawler                                   |
+| Comic       | `mangabats`          | ~0.5-1.0s | 🟢 High     | Multi-chapter CDN image extractor                       |
 
 ---
 

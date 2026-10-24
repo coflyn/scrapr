@@ -1,10 +1,11 @@
 {
   "name": "@coflyn/scrapr",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "Universal media extractor, link resolver, and URL unshortener for Node.js (TikTok, Instagram, YouTube, Spotify, Sfile, Safelinku, and more).",
   "main": "index.js",
   "files": [
     "index.js",
+    "bundle.cjs",
     "lib"
   ],
   "publishConfig": {
@@ -34,7 +35,7 @@
   ],
   "scripts": {
     "test": "node test/test.js",
-    "bundle": "esbuild index.js --bundle --platform=node --format=cjs --minify --outfile=bundle.cjs",
+    "bundle": "npx esbuild index.js --bundle --platform=node --format=cjs --minify --outfile=bundle.cjs",
     "preversion": "npm run bundle",
     "prepare": "npm run bundle"
   },

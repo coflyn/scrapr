@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-10-25
+
+### Added
+
+- `anime`: Added dedicated namespace for anime scrapers:
+  - `anime.otakudesu`: Search titles, list episodes, and scrape multi-server video streams with Indonesian subtitles.
+  - `anime.gogoanime`: Search titles, list episodes, extract embed web players, and decrypt Megaplay AES-256-CBC / HMAC-SHA256 tokens into direct 1080p HLS m3u8 streams using pure Node.js `crypto`.
+  - `anime.nimegami`: Search anime and resolve streaming links.
+  - `anime.animetosho`: Torrent and direct download mirror resolver.
+- `comic`: Added dedicated namespace for comic, manga, and manhwa scrapers:
+  - `comic.komikindo`: Search Indonesian comics, list chapters, and extract chapter page images.
+  - `comic.komiku`: Search via htmx endpoint, fetch series chapters, and scrape high-res manga images.
+  - `comic.asurascans`: Search English manhwa titles, list chapters, and scrape webtoon images.
+  - Additional scrapers: `kiryuu`, `komikcast`, `mangadex`, `bacakomik`, `manhwaindo`, `mangabats`.
+
 ## [1.3.1] - 2026-10-19
 
 ### Added
