@@ -99,6 +99,41 @@ const SAMPLES = {
       "gdrive",
     ],
   },
+  comic: {
+    kiryuuUrl:
+      "https://v7.kiryuu.to/manga/lv-99-princess-of-black-flame/chapter-54.827370/",
+    komikcastUrl:
+      "https://komikcast.info/manga/lv-99-princess-of-black-flame/chapter/54",
+    mangadexUrl:
+      "https://mangadex.org/chapter/ef3fbcb1-1b53-4795-a534-74be24f03aac",
+    komikindoUrl: "https://komikindo.ch/ticket-hero-chapter-352/",
+    komikuUrl: "https://komiku.org/tokyo%e5%8d%8drevengers-chapter-278-4/",
+    bacakomikUrl: "https://bacakomik.my/ticket-hero-chapter-352/",
+    manhwaindoUrl:
+      "https://www.manhwaindo.my/the-clans-failure-is-the-former-strongest-in-the-continent-chapter-60/",
+    asurascansUrl:
+      "https://asurascans.com/comics/reformation-of-the-deadbeat-noble-11fe7da3/chapter/1",
+    mangabatsUrl: "https://www.mangabats.com/manga/snake-ancestor/chapter-110",
+    methods: [
+      "kiryuu",
+      "komikcast",
+      "mangadex",
+      "komikindo",
+      "komiku",
+      "bacakomik",
+      "manhwaindo",
+      "asurascans",
+      "mangabats",
+    ],
+  },
+  anime: {
+    otakudesuUrl: "https://otakudesu.blog/episode/kg2026-episode-4-sub-indo/",
+    nimegamiUrl: "https://nimegami.id/fx-senshi-kurumi-chan-sub-indo/",
+    gogoanimeUrl: "https://www14.gogoanime.me/liar-game-episode-3",
+    animetoshoUrl:
+      "https://animetosho.org/view/piyoko-onegai-aipri-05-web-amzn-1080p-h264.n2107633",
+    methods: ["otakudesu", "nimegami", "gogoanime", "animetosho"],
+  },
 };
 
 function validateSchema(payload) {
@@ -208,18 +243,17 @@ async function run() {
     const start = Date.now();
     let timer;
     try {
-      const timeoutLimit =
-        [
-          "snapinsta",
-          "rekonise",
-          "klickaud",
-          "ytmp3gg",
-          "fdown",
-          "snapsave",
-          "sechno",
-        ].includes(method)
-          ? 35000
-          : 20000;
+      const timeoutLimit = [
+        "snapinsta",
+        "rekonise",
+        "klickaud",
+        "ytmp3gg",
+        "fdown",
+        "snapsave",
+        "sechno",
+      ].includes(method)
+        ? 35000
+        : 20000;
       const timeoutPromise = new Promise((_, reject) => {
         timer = setTimeout(
           () => reject(new Error(`Timeout (${timeoutLimit / 1000}s exceeded)`)),

@@ -16,6 +16,8 @@ const rednote = require("./lib/rednote");
 const reddit = require("./lib/reddit");
 const terabox = require("./lib/terabox");
 const resolver = require("./lib/resolver");
+const comic = require("./lib/comic");
+const anime = require("./lib/anime");
 
 module.exports = {
   bilibili,
@@ -36,4 +38,8 @@ module.exports = {
   reddit,
   terabox,
   resolver,
+  comic,
+  anime,
 };
+
+
